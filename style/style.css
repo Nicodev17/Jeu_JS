@@ -1,0 +1,75 @@
+/* CORPS DE LA PAGE */
+body {
+    color: white;
+    background-image: url(background.png);
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 27px;
+    color: #3b2c05;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* DESIGN DU JEU */
+
+/* BOITE DIV DU PLATEAU */
+.gameDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* PLATEAU */
+canvas {
+    border: 5px solid rgb(94, 93, 90);
+    cursor: pointer;
+}
+
+/* PETITS ECRANS */
+@media screen and (max-width: 55em) {
+    canvas {
+        width: 450px;
+        height: 450px;
+    }
+    h1 {
+        font-size: 22px;
+    }
+}
+
+/* SMARTPHONES */
+@media screen and (max-width: 35em) {
+    canvas {
+        width: 400px;
+        height: 400px;
+    }
+    h1 {
+        font-size: 18px;
+    }
+}
+
+/* ---- BOITES DES STATS JOUEURS ---- */
+
+.gameInfo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.statPlayer1 {
+    margin-right: 30px;
+}
+
+.statPlayer2 {
+    margin-left: 30px;
+}
+
+.statWeapons {
+    margin-left: 30px;
+}
