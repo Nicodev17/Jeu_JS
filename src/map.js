@@ -1,5 +1,25 @@
+// MEMO 
 
-// -------|| Génération de la grille de la map avec toutes la cases ||-------
+// cases : 
+  //     - id [obstacle, weapon, player, empty, ? nextToPlayer ?]
+  //     - weapon > type [1, 2, 3, 4] => identifie l'arme sur la case
+  //     - havePlayer > [0(pas de joueur), 1, 2 ]
+  // Joueur : éloignés séparés par au moins une case
+  // Refactoriser la map / distance entre les joueurs / mouvements possibles
+
+  
+/*----------------------------------------------------------------------
+-----|| Génération de la grille de la map avec toutes les cases ||------
+----------------------------------------------------------------------*/
+class Map {
+  constructor(joueur1, joueur2, arme1, arme2, arme3, arme4, obstacles, caseVide, caseProche) {
+    this.joueurs = [joueur1, joueur2];
+    this.armes = [arme1, arme2, arme3, arme4];
+    this.obstacles = obstacles;
+    this.caseVide = caseVide;
+    this.caseProche = caseProche; // Cases tout autour du joueur 
+  }
+};
 
 // Création des variables pour le canvas
 let canvas = document.getElementById('plateau'),
@@ -13,13 +33,6 @@ let largeurMax = canvas.width, // Largeur de la map
     nombreCasesHauteur = hauteurMax / tailleCase, 
     nombreCases = nombreCasesLargeur * nombreCasesHauteur, // Le nombre de cases total
     listeCases = []; // Contient un tableau avec la liste des cases
-
-  // cases : 
-  //     - id [obstacle, weapon, player, empty, ? nextToPlayer ?]
-  //     - weapon > type [1, 2, 3, 4, 5 ] => identifie l'arme sur la case
-  //     - havePlayer > [0, 1, 2 ]
-  // Joueur : éloignés séparés par au moins une case
-  // Refactoriser la map / distance entre les joueurs / mouvements possibles
 
 // Fonction qui crée toutes les cases du plateau
 function creerPlateau() {
@@ -65,7 +78,10 @@ function randomNumber() {
 // Récupération d'un index de case au hasard
 let caseAleatoire = randomNumber(); 
 
-// -------|| Génération des obstacles aléatoirement sur la map ||-------
+/*----------------------------------------------------------------------
+--------|| Génération des obstacles aléatoirement sur la map ||---------
+----------------------------------------------------------------------*/
+function placeObstacles() {
 
 let nombreObstacles = 12;
 
@@ -89,9 +105,13 @@ for (i = 0; i < nombreCases; i++) {
       });
     }
   })/*appel*/(i);
-}
+} }
+placeObstacles();
 
-// -------|| Génération des 2 joueurs aléatoirement sur la map ||-------
+/*----------------------------------------------------------------------
+--------|| Génération des 2 joueurs aléatoirement sur la map ||---------
+----------------------------------------------------------------------*/
+function placeJoueurs() {
 
 let joueur1 = 1,
     joueur2 = 1;
@@ -135,17 +155,19 @@ for (i = 0; i < nombreCases; i++) {
       });
     }
   })/*appel*/(i);
-}
+} }
+placeJoueurs();
 
 /* let nextToPlayer = 0;
-
 for (joueur1.positionX.positionY = joueur2.positionX.positionY + 1) {
   joueur1.positionX.positionY = + 1
 }; // si le joueur 1 est à côté du joueur 2 en début de partie alors position joueur 1 case++
-
 */
 
-// -------|| Génération des 3 armes aléatoirement sur la map ||-------
+/*----------------------------------------------------------------------
+---------|| Génération des 3 armes aléatoirement sur la map ||----------
+----------------------------------------------------------------------*/
+function placeArmes() {
 
 let arme2 = 1,
     arme3 = 1,
@@ -204,9 +226,5 @@ for (i = 0; i < nombreCases; i++) {
       });
     }
   })/*appel*/(i);
-}
-
-
-
-
-
+} }
+placeArmes();
