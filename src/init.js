@@ -13,6 +13,3 @@ const player2 = new Player("Lancelot", "player2", 100, weapon1, '<img src="./med
 const newMap = new GameMap('plateau', 12, [player1, player2], [weapon1, weapon2, weapon3, weapon4]);
 
 newMap.generateMap();
-newMap.generateObstacles();
-newMap.generatePlayers();
-//newMap.generateWeapons();
