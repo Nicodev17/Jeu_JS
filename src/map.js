@@ -1,212 +1,157 @@
+/*----------------------------------------------------------------------
+-----|| Génération de la grille de la map avec toutes les cases ||------
+----------------------------------------------------------------------*/
+class GameMap {
+  constructor(canvasId, nbObstacles, players, weapons) {
+    this.canvas = document.getElementById(canvasId);
+    this.context = this.canvas.getContext('2d');
+    this.listeCases = [];
+    this.obstacles = [];
+    this.nbObstacles = nbObstacles;
+    this.players = players;
+    this.weapons = weapons;
+    this.coordinates = this.getCoordinates();
+  }
 
-// -------|| Génération de la grille de la map avec toutes la cases ||-------
+  // Fonction qui crée toutes les cases du plateau
+  generateMap() {
+    this.context.fillStyle = "#f5ebd0"; // Couleur des cases
+    this.context.fillRect(0, 0, this.coordinates.largeurMap, this.coordinates.hauteurMap); // Totalité du canvas prise pour créer les cases
 
-// Création des variables pour le canvas
-let canvas = document.getElementById('plateau'),
-    context = canvas.getContext('2d');
-
-// Définition des variables
-let largeurMax = canvas.width, // Largeur de la map
-    hauteurMax = canvas.height, // Hauteur de la map
-    tailleCase = 60, // Taille d'une case
-    nombreCasesLargeur = largeurMax / tailleCase,
-    nombreCasesHauteur = hauteurMax / tailleCase, 
-    nombreCases = nombreCasesLargeur * nombreCasesHauteur, // Le nombre de cases total
-    listeCases = []; // Contient un tableau avec la liste des cases
-
-  // cases : 
-  //     - id [obstacle, weapon, player, empty, ? nextToPlayer ?]
-  //     - weapon > type [1, 2, 3, 4, 5 ] => identifie l'arme sur la case
-  //     - havePlayer > [0, 1, 2 ]
-  // Joueur : éloignés séparés par au moins une case
-  // Refactoriser la map / distance entre les joueurs / mouvements possibles
-
-// Fonction qui crée toutes les cases du plateau
-function creerPlateau() {
-  context.fillStyle = "#f5ebd0"; // Couleur des cases
-  context.fillRect(0, 0, largeurMax, hauteurMax); // Totalité du canvas prise pour créer les cases
-
-  let colonne = 0,
+    let colonne = 0,
       ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
 
-  // Pour chaque case du plateau :
-  for (i = 0; i < nombreCases; i++) {
-    // contour case et position
-    context.strokeStyle = 'grey';
-    context.strokeRect(tailleCase * colonne, tailleCase * ligne, tailleCase, tailleCase);
+    // Pour chaque case du plateau :
+    for (let i = 0; i < this.coordinates.nombreCases; i++) {
+      // contour case et position
+      this.context.strokeStyle = 'grey';
+      this.context.strokeRect(this.coordinates.tailleCase * colonne, this.coordinates.tailleCase * ligne, this.coordinates.tailleCase, this.coordinates.tailleCase);
 
-    // Ajout d'un objet à chaque case avec un id et les positions
-    listeCases[i] = {
-      numerocase: i,
-      id: "casevide",
-      positionX: tailleCase * colonne + 1,
-      positionY: tailleCase * ligne + 1
-    };
+      // Ajout d'un objet à chaque case avec son id de base et ses positions
+      let mapCase = {};
+      mapCase['numeroCase'] = i;
+      mapCase['id'] = 'casevide';
+      mapCase['positionX'] = this.coordinates.tailleCase * colonne;
+      mapCase['positionY'] = this.coordinates.tailleCase * ligne;
+      this.listeCases.push(mapCase);
 
-    // Une fois la case crée, passage à la colonne suivante
-    colonne++;
-
-    // Si on arrive à 10 cases, on passe à la ligne suivante
-    if (colonne === nombreCasesLargeur) {
-      colonne = 0;
-      ligne++;
-    }
-  }
-}
-//Appel de la fonction pour générer la map
-creerPlateau();
-
-// Fonction qui retourne un nombre aléatoire entre 0 et 100 (nombre cases total)
-function randomNumber() {
-  return Math.floor(Math.random() * (nombreCases));
-} 
-//mettre dans un fichier à part
-
-// Récupération d'un index de case au hasard
-let caseAleatoire = randomNumber(); 
-
-// -------|| Génération des obstacles aléatoirement sur la map ||-------
-
-let nombreObstacles = 12;
-
-for (i = 0; i < nombreObstacles; i++) {
-  caseAleatoire = randomNumber(); // récupère un index de case au hasard
-  if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée et si elle occupée
-    i--; // si oui alors on l'oublie..
-  } else { //sinon on applique l'id obstacle sur la case de libre
-    listeCases[caseAleatoire].id = "obstacle";
-  }
-}
-
-// Il y a 100 cases, on vérifie l'id de chacune et si c'est un obstacle, on lui applique le visuel de l'obstacle
-for (i = 0; i < nombreCases; i++) {
-  (function(i) {
-    if (listeCases[i].id === "obstacle") {
-      canvas = new Image();
-      canvas.src = "media/stone.png";
-      canvas.addEventListener('load', function() { // = quand la page se charge
-        context.drawImage(canvas, listeCases[i].positionX, listeCases[i].positionY);
-      });
-    }
-  })/*appel*/(i);
-}
-
-// -------|| Génération des 2 joueurs aléatoirement sur la map ||-------
-
-let joueur1 = 1,
-    joueur2 = 1;
-
-// ---- CASE JOUEUR 1 ----
-for (i = 0; i < joueur1; i++) {
-  caseAleatoire = randomNumber();
-  if (listeCases[caseAleatoire].id !== "casevide") {
-    i--;
-  } else { 
-    listeCases[caseAleatoire].id = "joueur1";
-  }
-}
-
-// ---- CASE JOUEUR 2 ----
-for (i = 0; i < joueur2; i++) {
-  caseAleatoire = randomNumber();
-  if (listeCases[caseAleatoire].id !== "casevide") {
-    i--;
-  } else { 
-    listeCases[caseAleatoire].id = "joueur2";
-  }
-}
-
-// APPLICATION VISUEL
-for (i = 0; i < nombreCases; i++) {
-  (function(i) {
-    if (listeCases[i].id === "joueur1") {
-      canvasJoueur1 = new Image();
-      canvasJoueur1.src = "media/joueurs/joueur_1_1.png";
-      canvasJoueur1.addEventListener('load', function() {
-        context.drawImage(canvasJoueur1, listeCases[i].positionX, listeCases[i].positionY);
-      });
+      // Une fois la case crée, passage à la colonne suivante
+      colonne++;
+      // Si on arrive à 10 cases, on passe à la ligne suivante
+      if (colonne === this.coordinates.nombreCasesLargeur) {
+        colonne = 0;
+        ligne++;
+      }
     }
 
-    if (listeCases[i].id === "joueur2") {
-      canvasJoueur2 = new Image();
-      canvasJoueur2.src = "media/joueurs/joueur_2_1.png";
-      canvasJoueur2.addEventListener('load', function() {
-        context.drawImage(canvasJoueur2, listeCases[i].positionX, listeCases[i].positionY);
-      });
+    this.generateObstacles();
+    this.generatePlayers();
+    this.generateWeapons();
+    this.drawMap();
+
+  } // fin fonction generateMap
+
+  /*----------------------------------------------------------------------
+  ----------------|| Génération des obstacles de la map ||----------------
+  ----------------------------------------------------------------------*/
+  generateObstacles() {
+    let listeCases = this.listeCases;
+
+    for (let i = 0; i < this.nbObstacles; i++) {
+      let caseAleatoire = randomNumber();
+      if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée
+        i--; // si l'id est autre "casevide" (par ex "joueur1") alors on l'oublie..
+      } else { // sinon on applique l'id obstacle sur la case de libre
+        listeCases[caseAleatoire].id = "obstacle";
+      }
     }
-  })/*appel*/(i);
-}
+  } // Fin fonction generateObstacles
 
-/* let nextToPlayer = 0;
+  /*----------------------------------------------------------------------
+  ----------------------|| Création des 2 joueurs ||----------------------
+  ----------------------------------------------------------------------*/
+  generatePlayers() {
+    let listeCases = this.listeCases;
+    let caseAleatoire = randomNumber();
 
-for (joueur1.positionX.positionY = joueur2.positionX.positionY + 1) {
-  joueur1.positionX.positionY = + 1
-}; // si le joueur 1 est à côté du joueur 2 en début de partie alors position joueur 1 case++
-
-*/
-
-// -------|| Génération des 3 armes aléatoirement sur la map ||-------
-
-let arme2 = 1,
-    arme3 = 1,
-    arme4 = 1;
-
-// ---- CASE ARME 1 ----
-for (i = 0; i < arme2; i++) {
-  caseAleatoire = randomNumber();
-  if (listeCases[caseAleatoire].id !== "casevide") {
-    i--;
-  } else { 
-    listeCases[caseAleatoire].id = "arme2";
-  }
-}
-
-// ---- CASE ARME 2 ----
-for (i = 0; i < arme3; i++) {
-  caseAleatoire = randomNumber();
-  if (listeCases[caseAleatoire].id !== "casevide") {
-    i--;
-  } else { 
-    listeCases[caseAleatoire].id = "arme3";
-  }
-}
-
-// ---- CASE ARME 3 ----
-for (i = 0; i < arme4; i++) {
-  caseAleatoire = randomNumber();
-  if (listeCases[caseAleatoire].id !== "casevide") {
-    i--;
-  } else { 
-    listeCases[caseAleatoire].id = "arme4";
-  }
-}
-
-// APPLICATION VISUEL
-for (i = 0; i < nombreCases; i++) {
-  (function(i) {
-    if (listeCases[i].id === "arme2") {
-      canvasArme2 = new Image();
-      canvasArme2.src = "media/armes/arme_2.png";
-      canvasArme2.addEventListener('load', function() {
-        context.drawImage(canvasArme2, listeCases[i].positionX, listeCases[i].positionY);
-      });
-    } if (listeCases[i].id === "arme3") {
-      canvasArme3 = new Image();
-      canvasArme3.src = "media/armes/arme_3.png";
-      canvasArme3.addEventListener('load', function() {
-        context.drawImage(canvasArme3, listeCases[i].positionX, listeCases[i].positionY);
-      });
-    } if (listeCases[i].id === "arme4") {
-      canvasArme4 = new Image();
-      canvasArme4.src = "media/armes/arme_4.png";
-      canvasArme4.addEventListener('load', function() {
-        context.drawImage(canvasArme4, listeCases[i].positionX, listeCases[i].positionY);
-      });
+    for (let index = 1; index <= this.players.length; index++) {
+      while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
+        caseAleatoire = randomNumber();
+      }
+      console.log(caseAleatoire);
+      listeCases[caseAleatoire].id = "joueur" + index;
     }
-  })/*appel*/(i);
-}
+  } // fin fonction generatePlayers
 
+  /*----------------------------------------------------------------------
+  --------|| Création des 3 armes affichées sur la map au début ||--------
+  ----------------------------------------------------------------------*/
+  generateWeapons() {
+    let listeCases = this.listeCases;
+    let caseAleatoire = randomNumber();
 
+    for (let index = 1; index <= this.weapons.length; index++) {
+      while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
+        caseAleatoire = randomNumber();
+      }
+      listeCases[caseAleatoire].id = "arme" + index;
+    }
+  } // Fin fonction generateWeapons
 
+  /*----------------------------------------------------------------------
+  ----------|| Fonction regroupant les variables du plateau ||------------
+  ----------------------------------------------------------------------*/
+  getCoordinates() {
+    let largeurMap = this.canvas.width,
+      hauteurMap = this.canvas.height,
+      tailleCase = 60,
+      nombreCasesLargeur = largeurMap / tailleCase,
+      nombreCasesHauteur = hauteurMap / tailleCase,
+      nombreCases = nombreCasesLargeur * nombreCasesHauteur;
 
+    return {
+      largeurMap,
+      hauteurMap,
+      tailleCase,
+      nombreCasesLargeur,
+      nombreCasesHauteur,
+      nombreCases
+    }
+  }
 
+  /*----------------------------------------------------------------------
+  ----------------------|| Affichage des visuels ||-----------------------
+  ----------------------------------------------------------------------*/
+  drawMap() {
+    for (let i = 0; i < this.coordinates.nombreCases; i++) {
+      ((i) => {
+        let image = new Image();
+        switch (this.listeCases[i].id) {
+          case "obstacle":
+            image.src = "media/stone.png";
+            break
+          case "joueur1":
+            image.src = "media/joueurs/joueur_1_1.png";
+            break
+          case "joueur2":
+            image.src = "media/joueurs/joueur_2_1.png";
+            break
+          case "arme2":
+            image.src = "media/armes/arme_2.png";
+            break
+          case "arme3":
+            image.src = "media/armes/arme_3.png";
+            break
+          case "arme4":
+            image.src = "media/armes/arme_4.png";
+            break
+        }
+        if (image.src !== undefined) {
+          image.addEventListener('load', () => {
+            this.context.drawImage(image, this.listeCases[i].positionX, this.listeCases[i].positionY);
+          });
+        }
+      })/*appel*/(i);
+    }
+  }
+} // fin de la classe Map

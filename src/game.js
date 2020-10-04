@@ -1,4 +1,4 @@
-//tests
+// Tests
 let statJoueur1 = document.querySelector(".statPlayer1");
 statJoueur1.addEventListener('click', function() {
     document.querySelector(".test").innerHTML = "Ca marche !";
