@@ -2,12 +2,13 @@
 -----|| Génération de la grille de la map avec toutes les cases ||------
 ----------------------------------------------------------------------*/
 class GameMap {
-  constructor(canvasId, nbObstacles, players, weapons) {
+  constructor(canvasId, nbObstacles1, nbObstacles2, players, weapons) {
     this.canvas = document.getElementById(canvasId);
     this.context = this.canvas.getContext('2d');
     this.listeCases = [];
     this.obstacles = [];
-    this.nbObstacles = nbObstacles;
+    this.nbObstacles1 = nbObstacles1;
+    this.nbObstacles2 = nbObstacles2;
     this.players = players;
     this.weapons = weapons;
     this.coordinates = this.getCoordinates();
@@ -15,7 +16,7 @@ class GameMap {
 
   // Fonction qui crée toutes les cases du plateau
   generateMap() {
-    this.context.fillStyle = "#f5ebd0"; // Couleur des cases
+    this.context.fillStyle = "#ede0bb"; // Couleur des cases
     this.context.fillRect(0, 0, this.coordinates.largeurMap, this.coordinates.hauteurMap); // Totalité du canvas prise pour créer les cases
 
     let colonne = 0,
@@ -56,15 +57,25 @@ class GameMap {
   ----------------------------------------------------------------------*/
   generateObstacles() {
     let listeCases = this.listeCases;
-
-    for (let i = 0; i < this.nbObstacles; i++) {
+    
+    for (let i = 0; i < this.nbObstacles1; i++) {
       let caseAleatoire = randomNumber();
       if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée
         i--; // si l'id est autre "casevide" (par ex "joueur1") alors on l'oublie..
       } else { // sinon on applique l'id obstacle sur la case de libre
-        listeCases[caseAleatoire].id = "obstacle";
+        listeCases[caseAleatoire].id = "obstacle1";
       }
     }
+
+    for (let i = 0; i < this.nbObstacles2; i++) {
+      let caseAleatoire = randomNumber();
+      if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée
+        i--; // si l'id est autre "casevide" (par ex "joueur1") alors on l'oublie..
+      } else { // sinon on applique l'id obstacle sur la case de libre
+        listeCases[caseAleatoire].id = "obstacle2";
+      }
+    }
+    console.log(listeCases);
   } // Fin fonction generateObstacles
 
   /*----------------------------------------------------------------------
@@ -109,14 +120,7 @@ class GameMap {
       nombreCasesHauteur = hauteurMap / tailleCase,
       nombreCases = nombreCasesLargeur * nombreCasesHauteur;
 
-    return {
-      largeurMap,
-      hauteurMap,
-      tailleCase,
-      nombreCasesLargeur,
-      nombreCasesHauteur,
-      nombreCases
-    }
+    return { largeurMap, hauteurMap, tailleCase, nombreCasesLargeur, nombreCasesHauteur, nombreCases }
   }
 
   /*----------------------------------------------------------------------
@@ -126,10 +130,13 @@ class GameMap {
     for (let i = 0; i < this.coordinates.nombreCases; i++) {
       ((i) => {
         let image = new Image();
-        switch (this.listeCases[i].id) {
-          case "obstacle":
-            image.src = "media/stone.png";
+        switch(this.listeCases[i].id) {
+          case "obstacle1":
+              image.src = "media/stone.png";
             break
+          case "obstacle2":
+            image.src = "media/tree.png";
+          break
           case "joueur1":
             image.src = "media/joueurs/joueur_1_1.png";
             break

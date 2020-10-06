@@ -2,3 +2,14 @@
 function randomNumber() {
     return Math.floor(Math.random() * 99); // 99 = nb de cases total
   }
+
+/* Tableau des sources d'images pour les obstacles
+let obstacles = ['stone.png', 'tree.png', 'bush.png'];
+
+function obstacleAleatoire(array) {
+	return array[Math.floor(Math.random() * array.length)];
+} // retourne 1, 2 ou 3
+
+let testObstacle = obstacleAleatoire(obstacles);
+
+console.log(testObstacle); */

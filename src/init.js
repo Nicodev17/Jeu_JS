@@ -10,6 +10,6 @@ const weapon4 = new Weapon("weapon4", "Hache", 25, '<img src="./media/armes/arme
 const player1 = new Player("Arthur", "player1", 100, weapon1, '<img src="./media/joueurs/joueur_1_1.png" alt="Image du joueur 1"> </img>');
 const player2 = new Player("Lancelot", "player2", 100, weapon1, '<img src="./media/joueurs/joueur_2_1.png" alt="Image du joueur 2"> </img>');
 
-const newMap = new GameMap('plateau', 12, [player1, player2], [weapon1, weapon2, weapon3, weapon4]);
+const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon2, weapon3, weapon4]);
 
 newMap.generateMap();
