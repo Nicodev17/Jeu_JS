@@ -49,15 +49,15 @@ class GameMap {
     this.generatePlayers();
     this.generateWeapons();
     this.drawMap();
-
+    this.spawnJoueurs();
   } // fin fonction generateMap
 
   /*----------------------------------------------------------------------
-  ----------------|| Génération des obstacles de la map ||----------------
+  ------------|| Création des 2 types d'obstacles de la map ||------------
   ----------------------------------------------------------------------*/
   generateObstacles() {
     let listeCases = this.listeCases;
-    
+
     for (let i = 0; i < this.nbObstacles1; i++) {
       let caseAleatoire = randomNumber();
       if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée
@@ -69,14 +69,14 @@ class GameMap {
 
     for (let i = 0; i < this.nbObstacles2; i++) {
       let caseAleatoire = randomNumber();
-      if (listeCases[caseAleatoire].id !== "casevide") { // vérifie l'id de la case piochée
-        i--; // si l'id est autre "casevide" (par ex "joueur1") alors on l'oublie..
-      } else { // sinon on applique l'id obstacle sur la case de libre
+      if (listeCases[caseAleatoire].id !== "casevide") {
+        i--;
+      } else {
         listeCases[caseAleatoire].id = "obstacle2";
       }
     }
     console.log(listeCases);
-  } // Fin fonction generateObstacles
+  }
 
   /*----------------------------------------------------------------------
   ----------------------|| Création des 2 joueurs ||----------------------
@@ -89,13 +89,12 @@ class GameMap {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
-      console.log(caseAleatoire);
       listeCases[caseAleatoire].id = "joueur" + index;
     }
-  } // fin fonction generatePlayers
+  }
 
   /*----------------------------------------------------------------------
-  --------|| Création des 3 armes affichées sur la map au début ||--------
+  ----------|| Création des 3 armes dispo sur la map au début ||----------
   ----------------------------------------------------------------------*/
   generateWeapons() {
     let listeCases = this.listeCases;
@@ -107,7 +106,7 @@ class GameMap {
       }
       listeCases[caseAleatoire].id = "arme" + index;
     }
-  } // Fin fonction generateWeapons
+  }
 
   /*----------------------------------------------------------------------
   ----------|| Fonction regroupant les variables du plateau ||------------
@@ -130,13 +129,13 @@ class GameMap {
     for (let i = 0; i < this.coordinates.nombreCases; i++) {
       ((i) => {
         let image = new Image();
-        switch(this.listeCases[i].id) {
+        switch (this.listeCases[i].id) {
           case "obstacle1":
-              image.src = "media/stone.png";
+            image.src = "media/stone.png";
             break
           case "obstacle2":
             image.src = "media/tree.png";
-          break
+            break
           case "joueur1":
             image.src = "media/joueurs/joueur_1_1.png";
             break
@@ -159,6 +158,20 @@ class GameMap {
           });
         }
       })/*appel*/(i);
+    }
+  }
+
+  /*----------------------------------------------------------------------
+  ------|| Fonction interdisant les spawn des joueurs côte à côte ||------
+  ----------------------------------------------------------------------*/
+  spawnJoueurs() {
+    let listeCases = this.listeCases;
+    let joueur1 = listeCases.find(element => element.id === "joueur1");
+    let joueur2 = listeCases.find(element => element.id === "joueur2");
+
+    if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) == 60)) {
+      // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
+      window.location.reload();
     }
   }
 } // fin de la classe Map
