@@ -1,5 +1,6 @@
 class Player{
-    constructor(name, health, weapon, imgUrl){
+    constructor(id, name, health, weapon, imgUrl){
+        this.id = id;
         this.name = name;
         this.health = health;
         this.weapon = weapon;

@@ -49,7 +49,8 @@ class GameMap {
     this.generatePlayers();
     this.generateWeapons();
     this.drawMap();
-    this.spawnJoueurs();
+    this.spawnNext();
+    this.assignObject();
   } // fin fonction generateMap
 
   /*----------------------------------------------------------------------
@@ -137,19 +138,19 @@ class GameMap {
             image.src = "media/tree.png";
             break
           case "joueur1":
-            image.src = "media/joueurs/joueur_1_1.png";
+            image.src = player1.imgUrl;
             break
           case "joueur2":
-            image.src = "media/joueurs/joueur_2_1.png";
+            image.src = player2.imgUrl;
             break
           case "arme2":
-            image.src = "media/armes/arme_2.png";
+            image.src = weapon2.imgUrl;
             break
           case "arme3":
-            image.src = "media/armes/arme_3.png";
+            image.src = weapon3.imgUrl;
             break
           case "arme4":
-            image.src = "media/armes/arme_4.png";
+            image.src = weapon4.imgUrl;
             break
         }
         if (image.src !== undefined) {
@@ -164,14 +165,51 @@ class GameMap {
   /*----------------------------------------------------------------------
   ------|| Fonction interdisant les spawn des joueurs côte à côte ||------
   ----------------------------------------------------------------------*/
-  spawnJoueurs() {
+  spawnNext() {
     let listeCases = this.listeCases;
     let joueur1 = listeCases.find(element => element.id === "joueur1");
     let joueur2 = listeCases.find(element => element.id === "joueur2");
 
-    if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) == 60)) {
-      // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
-      window.location.reload();
-    }
+    window.addEventListener("load", function(event) {
+      if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) == 120)) {
+        // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
+        window.location.reload();
+      }
+    });
+  }
+
+  /*----------------------------------------------------------------------
+  ---|| Fonction assignant aux cases les prop de l'objet en question ||---
+  ----------------------------------------------------------------------*/
+  assignObject() {
+    let listeCases = this.listeCases;
+    // Joueurs
+    //Cases
+    let joueur1 = listeCases.find(element => element.id === "joueur1");
+    let joueur2 = listeCases.find(element => element.id === "joueur2");
+    //Objet (de la classe)
+    let sourceJ1 = player1;
+    let sourceJ2 = player2;
+
+    const fusion1 = Object.assign(joueur1, sourceJ1);
+    const fusion2 = Object.assign(joueur2, sourceJ2);
+
+    // Armes
+    let arme2 = listeCases.find(element => element.id === "arme2");
+    let arme3 = listeCases.find(element => element.id === "arme3");
+    let arme4 = listeCases.find(element => element.id === "arme4");
+    let sourceArme2 = weapon2;
+    let sourceArme3 = weapon3;
+    let sourceArme4 = weapon4;
+
+    const fusion3 = Object.assign(arme2, sourceArme2);
+    const fusion4 = Object.assign(arme3, sourceArme3);
+    const fusion5 = Object.assign(arme4, sourceArme4);
+
+    console.log(fusion1);
+    console.log(fusion2);
+    console.log(fusion3);
+    console.log(fusion4);
+    console.log(fusion5);
   }
 } // fin de la classe Map

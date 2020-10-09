@@ -14,3 +14,8 @@ let statArmes = document.querySelector(".statWeapons");
 statArmes.addEventListener('click', function() {
     document.querySelector(".test3").innerHTML = "Ca marche !";
 } );
+
+/*----------------------------------------------------------------------
+--------------------|| Gestion du tour par tour ||----------------------
+----------------------------------------------------------------------*/
+

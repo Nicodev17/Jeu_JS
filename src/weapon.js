@@ -10,7 +10,7 @@ class Weapon {
  récupérer pour ensuite l'utiliser pour afficher l'arme dans l'interface du joueur */
 
     getVisuelArmeJoueur() {
-        return "img/arme" + String(this.id)+ ".png"; // @return {string} cherche le nom du fichier correspondant à l'id de l'arme
+        return "media/armes/arme_" + String(this.id)+ ".png"; // @return {string} cherche le nom du fichier correspondant à l'id de l'arme
     }
 
 };
