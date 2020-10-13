@@ -20,7 +20,7 @@ class GameMap {
     this.context.fillRect(0, 0, this.coordinates.largeurMap, this.coordinates.hauteurMap); // Totalité du canvas prise pour créer les cases
 
     let colonne = 0,
-      ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
+        ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
 
     // Pour chaque case du plateau :
     for (let i = 0; i < this.coordinates.nombreCases; i++) {
@@ -169,7 +169,6 @@ class GameMap {
     let listeCases = this.listeCases;
     let joueur1 = listeCases.find(element => element.id === "joueur1");
     let joueur2 = listeCases.find(element => element.id === "joueur2");
-
     window.addEventListener("load", function(event) {
       if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) == 120)) {
         // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 

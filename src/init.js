@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------
----------|| Initialisation des valeurs des objets du jeu ||----------
+----------|| Initialisation des valeurs des objets du jeu ||------------
 ----------------------------------------------------------------------*/
 
 const weapon1 = new Weapon("weapon1", "Lance", 10, 'media/armes/arme_1.png');
@@ -15,3 +15,7 @@ const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon
 console.log(player1.name + " & " + player2.name + " débutent la partie avec " + player1.health + " points de vie. Et l'arme : " + weapon1.name);
 
 newMap.generateMap();
+
+//GAME
+const newGame = new Game();
+newGame.setMove();
