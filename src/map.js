@@ -100,7 +100,7 @@ class GameMap {
     let listeCases = this.listeCases;
     let caseAleatoire = randomNumber();
 
-    for (let index= 1; index <= this.weapons.length; index++) {
+    for (let index= 2; index <= this.weapons.length; index++) {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
