@@ -48,7 +48,6 @@ class GameMap {
     this.generateObstacles();
     this.generatePlayers();
     this.generateWeapons();
-    this.drawMap();
     this.spawnNext();
     this.assignObject();
   } // fin fonction generateMap
@@ -101,7 +100,7 @@ class GameMap {
     let listeCases = this.listeCases;
     let caseAleatoire = randomNumber();
 
-    for (let index = 1; index <= this.weapons.length; index++) {
+    for (let index= 1; index <= this.weapons.length; index++) {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
@@ -137,19 +136,22 @@ class GameMap {
           case "obstacle2":
             image.src = "media/tree.png";
             break
+          case "casesAcess":
+            image.src = "media/dep.png";
+          break
           case "joueur1":
             image.src = player1.imgUrl;
             break
           case "joueur2":
             image.src = player2.imgUrl;
             break
-          case "arme2":
+          case "weapon2":
             image.src = weapon2.imgUrl;
             break
-          case "arme3":
+          case "weapon3":
             image.src = weapon3.imgUrl;
             break
-          case "arme4":
+          case "weapon4":
             image.src = weapon4.imgUrl;
             break
         }
