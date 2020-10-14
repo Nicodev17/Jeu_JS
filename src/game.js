@@ -41,54 +41,50 @@ setMove() {
     // Cases gauche
     for( let i = 1 ; i <= 3 ; i++) {
         let casesGauche = joueur1.numeroCase - i ;
-        if (listeCases[casesGauche].id === 'casevide' && listeCases[casesGauche].positionX >= 0 && listeCases[casesGauche].positionX <= 480) {
-            console.log(casesGauche);
+        if (casesGauche >= 0 && listeCases[casesGauche].id === 'casevide' && listeCases[casesGauche].positionX >= 0 && listeCases[casesGauche].positionX <= 480) {
             listeCases[casesGauche].id = 'casesAcess';
-            } else {
-            console.log('ça déborde à gauche');
+            console.log(casesGauche);
+        } else {
+            console.log('break à gauche');
             break;
-            }
+        }
     }
 
     // Cases droite
     for( let i = 1 ; i <= 3 ; i++) {
         let casesDroite = joueur1.numeroCase + i ;
-        if (listeCases[casesDroite].id === 'casevide' && listeCases[casesDroite].positionX >= 60 && listeCases[casesDroite].positionX <= 540) {
-        console.log(casesDroite);
-        listeCases[casesDroite].id = 'casesAcess';
+        if ( casesDroite <= 99 && listeCases[casesDroite].id === 'casevide' && listeCases[casesDroite].positionX >= 60 && listeCases[casesDroite].positionX <= 540) {
+            listeCases[casesDroite].id = 'casesAcess';
+            console.log(casesDroite);
         } else {
-        console.log('ça déborde à droite');
-        break;
+            console.log('break à droite');
+            break;
         }
     }
-
-    /*
-
+    
     // Cases Haut
     for( let i = 1 ; i <= 3 ; i++) {
-        let casesHaut = joueur1.positionY - (i*60);
-        if (listeCases[casesHaut].id === 'casevide' && listeCases[casesHaut].positionY >= 60 && listeCases[casesHaut].positionY <= 540) {
-        console.log(casesHaut);
-        listeCases[casesHaut].id = 'casesAcess';
+        let casesHaut = joueur1.numeroCase - (i*10);
+        if (casesHaut < 0 || listeCases[casesHaut].id != 'casevide') {
+            console.log('break en haut');
+            break;
         } else {
-        console.log('ça déborde en haut');
-        break;
+            listeCases[casesHaut].id = 'casesAcess';
+            console.log(casesHaut);
         }
     }
 
     // Cases Bas
     for( let i = 1 ; i <= 3 ; i++) {
-        let casesBas = joueur1.positionY + (i*60) ;
-        if (listeCases[casesBas].id === 'casevide' && listeCases[casesBas].positionY >= 60 && listeCases[casesBas].positionY <= 540) {
-        console.log(casesBas);
-        listeCases[casesBas].id = 'casesAcess';
+        let casesBas = joueur1.numeroCase + (i*10);
+        if (casesBas > 99 || listeCases[casesBas].id != 'casevide') {
+            console.log('break en bas');
+            break;
         } else {
-        console.log('ça déborde en bas');
-        break;
+            listeCases[casesBas].id = 'casesAcess'; 
+            console.log(casesBas);
         }
     }
-
-    */
 
 } // Fin fonction setmove
 
