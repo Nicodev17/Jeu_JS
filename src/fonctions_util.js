@@ -13,3 +13,8 @@ function obstacleAleatoire(array) {
 let testObstacle = obstacleAleatoire(obstacles);
 
 console.log(testObstacle); */
+
+// util de game
+//console.log(this.currentPlayer.weapon.name);   
+//let emptyCase = listeCases.filter(element => element.id === "casevide"); // filtre les cases du tableau ayant pour id casevide
+//console.log(emptyCase);

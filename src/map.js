@@ -75,7 +75,6 @@ class GameMap {
         listeCases[caseAleatoire].id = "obstacle2";
       }
     }
-    console.log(listeCases);
   }
 
   /*----------------------------------------------------------------------
@@ -151,6 +150,9 @@ class GameMap {
           case "weapon4":
             image.src = weapon4.imgUrl;
             break
+          case "weapon5":
+            image.src = weapon5.imgUrl;
+            break
         }
         if (image.src !== undefined) {
           image.addEventListener('load', () => {
@@ -178,7 +180,7 @@ class GameMap {
     let caseUnblockTop2 = joueur2.numeroCase - 10;
 
     window.addEventListener("load", function (event) {
-      if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) < 120)) {
+      if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) < 180)) {
         // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
         window.location.reload();
       } else if ((listeCases[caseUnblockRight].id.includes('obstacle') && listeCases[caseUnblockLeft].id.includes('obstacle') && listeCases[caseUnblockTop].id.includes('obstacle'))
@@ -209,18 +211,29 @@ class GameMap {
     let arme2 = listeCases.find(element => element.id === "arme2");
     let arme3 = listeCases.find(element => element.id === "arme3");
     let arme4 = listeCases.find(element => element.id === "arme4");
+    let arme5 = listeCases.find(element => element.id === "arme5");
     let sourceArme2 = weapon2;
     let sourceArme3 = weapon3;
     let sourceArme4 = weapon4;
+    let sourceArme5 = weapon5;
 
     const fusion3 = Object.assign(arme2, sourceArme2);
     const fusion4 = Object.assign(arme3, sourceArme3);
     const fusion5 = Object.assign(arme4, sourceArme4);
+    const fusion6 = Object.assign(arme5, sourceArme5);
 
     console.log(fusion1);
     console.log(fusion2);
     console.log(fusion3);
     console.log(fusion4);
     console.log(fusion5);
+    console.log(fusion6);
+
+    // On assigne au plateau (canvas html) toute la liste des cases créée en JS
+    let plateau = this.canvas;
+    let sourceListe = this.listeCases;
+    const fusionPlateau = Object.assign(sourceListe, plateau);
+
+    console.log(fusionPlateau);
   }
 } // fin de la classe Map
