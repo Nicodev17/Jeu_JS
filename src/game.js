@@ -109,29 +109,50 @@ class Game {
         let elemLeft = canvas.offsetLeft;
         let elemTop = canvas.offsetTop;
         let casesAccess = listeCases.filter(element => element.id === "casesAccess");
-/*
-        casesAccess.forEach(function(element) {
-            let caseObjet = element.numeroCase;
-            let objetVisé = listeCases[caseObjet];
-        });
-*/
+        
         canvas.addEventListener('click', function(event) {
-
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
 
            console.log(x, y);
             
-            for( let i = 0 ; i < 99 ; i++) { // pour toutes les cases
+            for( let i = 0 ; i <= 10 ; i++) { // 10 cases sur chaque lignes
                 //première ligne : OK
-                if( x < (60 * i) ) {
-                    console.log('Clic détecté en case ' + (i - 1));
+                if( x <= (60 * i) && y <= 60 ) {
+                    console.log('Clic en case ' + (i - 1));
+                    break;
+                } else if( x <= (60 * i) && y <= 120) {
+                    console.log('Clic en case ' + (i + 9));
+                    break;
+                }
+                else if( x <= (60 * i) && y <= 180 ) {
+                    console.log('Clic en case ' + (i + 19));
+                    break;
+                } else if( x <= (60 * i) && y <= 240 ) {
+                    console.log('Clic en case ' + (i + 29));
+                    break;
+                } else if( x <= (60 * i) && y <= 300 ) {
+                    console.log('Clic en case ' + (i + 39));
+                    break;
+                } else if( x <= (60 * i) && y <= 360 ) {
+                    console.log('Clic en case ' + (i + 49));
+                    break;
+                } else if( x <= (60 * i) && y <= 420 ) {
+                    console.log('Clic en case ' + (i + 59));
+                    break;
+                } else if( x <= (60 * i) && y <= 480 ) {
+                    console.log('Clic en case ' + (i + 69));
+                    break;
+                } else if( x <= (60 * i) && y <= 540 ) {
+                    console.log('Clic en case ' + (i + 79));
+                    break;
+                } else if( x <= (60 * i) && y <= 600 ) {
+                    console.log('Clic en case ' + (i + 89));
                     break;
                 }
             }
-
         }, false );
-               
+
     } // Fin fonction nextRound
 
 } // Fin de la classe Game
