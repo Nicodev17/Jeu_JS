@@ -101,58 +101,119 @@ class Game {
         || this.currentPlayer.positionX !== this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) > 120) ) {
             break;
         } */
-    }
+    }      
 
     nextRound() {
         let listeCases = this.mapInfo.listeCases;
         let canvas = this.mapInfo.canvas;
         let elemLeft = canvas.offsetLeft;
         let elemTop = canvas.offsetTop;
-        let casesAccess = listeCases.filter(element => element.id === "casesAccess");
         
         canvas.addEventListener('click', function(event) {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
+            let caseClick;
 
-           console.log(x, y);
-            
             for( let i = 0 ; i <= 10 ; i++) { // 10 cases sur chaque lignes
                 //première ligne : OK
                 if( x <= (60 * i) && y <= 60 ) {
-                    console.log('Clic en case ' + (i - 1));
+                    console.log('Clic en case ' + (i - 1) + " / x : " + x + " y : " + y);
+                    caseClick = i - 1;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 120) {
-                    console.log('Clic en case ' + (i + 9));
+                    console.log('Clic en case ' + (i + 9) + " / x : " + x + " y : " + y);
+                    caseClick = i + 9;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 }
                 else if( x <= (60 * i) && y <= 180 ) {
-                    console.log('Clic en case ' + (i + 19));
+                    console.log('Clic en case ' + (i + 19) + " / x : " + x + " y : " + y);
+                    caseClick = i + 19;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 240 ) {
-                    console.log('Clic en case ' + (i + 29));
+                    console.log('Clic en case ' + (i + 29) + " / x : " + x + " y : " + y);
+                    caseClick = i + 29;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 300 ) {
-                    console.log('Clic en case ' + (i + 39));
+                    console.log('Clic en case ' + (i + 39) + " / x : " + x + " y : " + y);
+                    caseClick = i + 39;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 360 ) {
-                    console.log('Clic en case ' + (i + 49));
+                    console.log('Clic en case ' + (i + 49) + " / x : " + x + " y : " + y);
+                    caseClick = i + 49;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 420 ) {
-                    console.log('Clic en case ' + (i + 59));
+                    console.log('Clic en case ' + (i + 59) + " / x : " + x + " y : " + y);
+                    caseClick = i + 59;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 480 ) {
-                    console.log('Clic en case ' + (i + 69));
+                    console.log('Clic en case ' + (i + 69) + " / x : " + x + " y : " + y);
+                    caseClick = i + 69;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 540 ) {
-                    console.log('Clic en case ' + (i + 79));
+                    console.log('Clic en case ' + (i + 79) + " / x : " + x + " y : " + y);
+                    caseClick = i + 79;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
                 } else if( x <= (60 * i) && y <= 600 ) {
-                    console.log('Clic en case ' + (i + 89));
+                    console.log('Clic en case ' + (i + 89) + " / x : " + x + " y : " + y);
+                    caseClick = i + 89;
+                    if (listeCases[caseClick].id !== "casesAccess") {
+                        console.log('Cette case n\'est pas accessible !');
+                    } else {
+                        console.log(listeCases[caseClick]);
+                    }
                     break;
-                }
+                }                          
             }
         }, false );
-
+        
     } // Fin fonction nextRound
-
+    
+    
+    
+    
 } // Fin de la classe Game
