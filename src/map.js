@@ -44,12 +44,14 @@ class GameMap {
         ligne++;
       }
     }
+    console.log(this.listeCases);
 
     this.generateObstacles();
     this.generatePlayers();
     this.generateWeapons();
     this.spawnNext();
     this.assignObject();
+      
   } // fin fonction generateMap
 
   /*----------------------------------------------------------------------
@@ -228,12 +230,5 @@ class GameMap {
     console.log(fusion4);
     console.log(fusion5);
     console.log(fusion6);
-
-    // On assigne au plateau (canvas html) toute la liste des cases créée en JS
-    let plateau = this.canvas;
-    let sourceListe = this.listeCases;
-    const fusionPlateau = Object.assign(sourceListe, plateau);
-
-    console.log(fusionPlateau);
   }
 } // fin de la classe Map
