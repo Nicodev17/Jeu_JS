@@ -1,9 +1,9 @@
 class Player{
-    constructor(name, health, weapon, imgUrl){
+    constructor(id, name, health, weapon, imgUrl){
+        this.id = id;
         this.name = name;
         this.health = health;
         this.weapon = weapon;
-        this.position = null;
         this.defense = false;
         this.imgUrl = imgUrl;
         this.ancienne_arme = -1; // Si une autre arme est ramassée, celle équipée tombe sur l'emplacement

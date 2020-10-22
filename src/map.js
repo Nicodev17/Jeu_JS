@@ -32,6 +32,7 @@ class GameMap {
       let mapCase = {};
       mapCase['numeroCase'] = i;
       mapCase['id'] = 'casevide';
+      mapCase['type'] = 'inaccess';
       mapCase['positionX'] = this.coordinates.tailleCase * colonne;
       mapCase['positionY'] = this.coordinates.tailleCase * ligne;
       this.listeCases.push(mapCase);
@@ -44,12 +45,6 @@ class GameMap {
         ligne++;
       }
     }
-
-    this.generateObstacles();
-    this.generatePlayers();
-    this.generateWeapons();
-    this.drawMap();
-    this.spawnJoueurs();
   } // fin fonction generateMap
 
   /*----------------------------------------------------------------------
@@ -75,7 +70,6 @@ class GameMap {
         listeCases[caseAleatoire].id = "obstacle2";
       }
     }
-    console.log(listeCases);
   }
 
   /*----------------------------------------------------------------------
@@ -100,7 +94,7 @@ class GameMap {
     let listeCases = this.listeCases;
     let caseAleatoire = randomNumber();
 
-    for (let index = 1; index <= this.weapons.length; index++) {
+    for (let index = 2; index <= this.weapons.length; index++) {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
@@ -137,19 +131,22 @@ class GameMap {
             image.src = "media/tree.png";
             break
           case "joueur1":
-            image.src = "media/joueurs/joueur_1_1.png";
+            image.src = player1.imgUrl;
             break
           case "joueur2":
-            image.src = "media/joueurs/joueur_2_1.png";
+            image.src = player2.imgUrl;
             break
           case "arme2":
-            image.src = "media/armes/arme_2.png";
+            image.src = weapon2.imgUrl;
             break
           case "arme3":
-            image.src = "media/armes/arme_3.png";
+            image.src = weapon3.imgUrl;
             break
           case "arme4":
-            image.src = "media/armes/arme_4.png";
+            image.src = weapon4.imgUrl;
+            break
+          case "arme5":
+            image.src = weapon5.imgUrl;
             break
         }
         if (image.src !== undefined) {
@@ -164,14 +161,76 @@ class GameMap {
   /*----------------------------------------------------------------------
   ------|| Fonction interdisant les spawn des joueurs côte à côte ||------
   ----------------------------------------------------------------------*/
-  spawnJoueurs() {
+  spawnNext() {
     let listeCases = this.listeCases;
     let joueur1 = listeCases.find(element => element.id === "joueur1");
     let joueur2 = listeCases.find(element => element.id === "joueur2");
+    //J1
+    let caseUnblockRight = joueur1.numeroCase + 1;
+    let caseUnblockLeft = joueur1.numeroCase - 1;
+    let caseUnblockTop = joueur1.numeroCase - 10;
+    //J2
+    let caseUnblockRight2 = joueur2.numeroCase + 1;
+    let caseUnblockLeft2 = joueur2.numeroCase - 1;
+    let caseUnblockTop2 = joueur2.numeroCase - 10;
 
-    if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) == 60)) {
-      // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
-      window.location.reload();
-    }
+    window.addEventListener("load", function (event) {
+      if (joueur1.positionY === joueur2.positionY && (Math.abs(joueur1.numeroCase - joueur2.numeroCase) == 1) || joueur1.positionX === joueur2.positionX && (Math.abs(joueur1.positionY - joueur2.positionY) < 180)) {
+        // = SI les joueurs 1 et 2 sont sur la même ligne ET que leur case se suivent OU si les joueurs 1 et 2 sont sur la même colonne ET que leur ligne se suit (ligne du dessous ou du dessus) 
+        window.location.reload();
+      } else if ((listeCases[caseUnblockRight].id.includes('obstacle') && listeCases[caseUnblockLeft].id.includes('obstacle') && listeCases[caseUnblockTop].id.includes('obstacle'))
+        || (listeCases[caseUnblockRight2].id.includes('obstacle') && listeCases[caseUnblockLeft2].id.includes('obstacle') && listeCases[caseUnblockTop2].id.includes('obstacle'))
+      ) {
+        window.location.reload();
+      } // Empeche l'encerclement du joueur par des obstacle au début
+    });
   }
+
+  /*----------------------------------------------------------------------
+  ------|| Fonction assignant aux objets les proprietés des cases ||------
+  ----------------------------------------------------------------------*/
+  assignObject() {
+    let listeCases = this.listeCases;
+    // -- Joueurs --
+    // Objets
+    let objetJ1 = player1;
+    let objetJ2 = player2;
+    // Cases
+    let caseJ1 = listeCases.find(element => element.id === "joueur1");;
+    let caseJ2 = listeCases.find(element => element.id === "joueur2");;
+
+    this.players[0] = Object.assign(objetJ1, caseJ1);
+    this.players[1] = Object.assign(objetJ2, caseJ2);
+
+    // -- Armes --
+    let objetArme2 = weapon2;
+    let objetArme3 = weapon3;
+    let objetArme4 = weapon4;
+    let objetArme5 = weapon5;
+    let caseArme2 = listeCases.find(element => element.id === "arme2");
+    let caseArme3 = listeCases.find(element => element.id === "arme3");
+    let caseArme4 = listeCases.find(element => element.id === "arme4");
+    let caseArme5 = listeCases.find(element => element.id === "arme5");
+
+    this.weapons[1] = Object.assign(objetArme2, caseArme2);
+    this.weapons[2] = Object.assign(objetArme3, caseArme3);
+    this.weapons[3] = Object.assign(objetArme4, caseArme4);
+    this.weapons[4] = Object.assign(objetArme5, caseArme5);
+  }
+
+  consolePrint() {
+    // Liste des cases
+    console.log(this.listeCases);
+     
+    // Joueurs
+    console.log(this.players[0]);
+    console.log(this.players[1]);
+
+    // Armes
+    console.log(this.weapons[1]);
+    console.log(this.weapons[2]);
+    console.log(this.weapons[3]);
+    console.log(this.weapons[4]);
+  }
+  
 } // fin de la classe Map
