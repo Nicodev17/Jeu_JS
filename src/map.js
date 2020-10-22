@@ -32,6 +32,7 @@ class GameMap {
       let mapCase = {};
       mapCase['numeroCase'] = i;
       mapCase['id'] = 'casevide';
+      mapCase['type'] = 'inaccess';
       mapCase['positionX'] = this.coordinates.tailleCase * colonne;
       mapCase['positionY'] = this.coordinates.tailleCase * ligne;
       this.listeCases.push(mapCase);
@@ -44,14 +45,6 @@ class GameMap {
         ligne++;
       }
     }
-    console.log(this.listeCases);
-
-    this.generateObstacles();
-    this.generatePlayers();
-    this.generateWeapons();
-    this.spawnNext();
-    this.assignObject();
-      
   } // fin fonction generateMap
 
   /*----------------------------------------------------------------------
@@ -143,16 +136,16 @@ class GameMap {
           case "joueur2":
             image.src = player2.imgUrl;
             break
-          case "weapon2":
+          case "arme2":
             image.src = weapon2.imgUrl;
             break
-          case "weapon3":
+          case "arme3":
             image.src = weapon3.imgUrl;
             break
-          case "weapon4":
+          case "arme4":
             image.src = weapon4.imgUrl;
             break
-          case "weapon5":
+          case "arme5":
             image.src = weapon5.imgUrl;
             break
         }
@@ -194,41 +187,50 @@ class GameMap {
   }
 
   /*----------------------------------------------------------------------
-  ---|| Fonction assignant aux cases les prop de l'objet en question ||---
+  ------|| Fonction assignant aux objets les proprietés des cases ||------
   ----------------------------------------------------------------------*/
   assignObject() {
     let listeCases = this.listeCases;
-    // Joueurs
-    //Cases
-    let joueur1 = listeCases.find(element => element.id === "joueur1");
-    let joueur2 = listeCases.find(element => element.id === "joueur2");
-    //Objet (de la classe)
-    let sourceJ1 = player1;
-    let sourceJ2 = player2;
+    // -- Joueurs --
+    // Objets
+    let objetJ1 = player1;
+    let objetJ2 = player2;
+    // Cases
+    let caseJ1 = listeCases.find(element => element.id === "joueur1");;
+    let caseJ2 = listeCases.find(element => element.id === "joueur2");;
 
-    const fusion1 = Object.assign(joueur1, sourceJ1);
-    const fusion2 = Object.assign(joueur2, sourceJ2);
+    this.players[0] = Object.assign(objetJ1, caseJ1);
+    this.players[1] = Object.assign(objetJ2, caseJ2);
+
+    // -- Armes --
+    let objetArme2 = weapon2;
+    let objetArme3 = weapon3;
+    let objetArme4 = weapon4;
+    let objetArme5 = weapon5;
+    let caseArme2 = listeCases.find(element => element.id === "arme2");
+    let caseArme3 = listeCases.find(element => element.id === "arme3");
+    let caseArme4 = listeCases.find(element => element.id === "arme4");
+    let caseArme5 = listeCases.find(element => element.id === "arme5");
+
+    this.weapons[1] = Object.assign(objetArme2, caseArme2);
+    this.weapons[2] = Object.assign(objetArme3, caseArme3);
+    this.weapons[3] = Object.assign(objetArme4, caseArme4);
+    this.weapons[4] = Object.assign(objetArme5, caseArme5);
+  }
+
+  consolePrint() {
+    // Liste des cases
+    console.log(this.listeCases);
+     
+    // Joueurs
+    console.log(this.players[0]);
+    console.log(this.players[1]);
 
     // Armes
-    let arme2 = listeCases.find(element => element.id === "arme2");
-    let arme3 = listeCases.find(element => element.id === "arme3");
-    let arme4 = listeCases.find(element => element.id === "arme4");
-    let arme5 = listeCases.find(element => element.id === "arme5");
-    let sourceArme2 = weapon2;
-    let sourceArme3 = weapon3;
-    let sourceArme4 = weapon4;
-    let sourceArme5 = weapon5;
-
-    const fusion3 = Object.assign(arme2, sourceArme2);
-    const fusion4 = Object.assign(arme3, sourceArme3);
-    const fusion5 = Object.assign(arme4, sourceArme4);
-    const fusion6 = Object.assign(arme5, sourceArme5);
-
-    console.log(fusion1);
-    console.log(fusion2);
-    console.log(fusion3);
-    console.log(fusion4);
-    console.log(fusion5);
-    console.log(fusion6);
+    console.log(this.weapons[1]);
+    console.log(this.weapons[2]);
+    console.log(this.weapons[3]);
+    console.log(this.weapons[4]);
   }
+  
 } // fin de la classe Map
