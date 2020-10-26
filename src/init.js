@@ -26,12 +26,12 @@ newMap.consolePrint();
 // console.log(player1.name + " & " + player2.name + " débutent la partie avec " + player1.health + " points de vie. Et l'arme : " + weapon1.name);
 
 //GAME
-const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5] );
-newGame.setRound();
-newGame.nextRound();
+const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
+//newGame.setRound();
 newGame.setMove();
+newGame.nextRound();
 
 // Affichage visuel de la map
-//newMap.drawMap();
+newMap.drawMap();
 
 

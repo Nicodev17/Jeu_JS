@@ -25,7 +25,7 @@ class Game {
                 listeCases[casesGauche].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesGauche].positionX, listeCases[casesGauche].positionY, 60, 60);
-                this.mapInfo.drawMap();
+                //this.mapInfo.drawMap();
                 this.mapInfo.spawnNext();
             } else {
                 break;
@@ -40,7 +40,7 @@ class Game {
                 listeCases[casesDroite].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesDroite].positionX, listeCases[casesDroite].positionY, 60, 60);
-                this.mapInfo.drawMap();
+                //this.mapInfo.drawMap();
                 this.mapInfo.spawnNext();
             } else {
                 break;
@@ -57,7 +57,7 @@ class Game {
                 listeCases[casesHaut].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesHaut].positionX, listeCases[casesHaut].positionY, 60, 60);
-                this.mapInfo.drawMap();
+                //this.mapInfo.drawMap();
                 this.mapInfo.spawnNext();
             }
         }
@@ -72,7 +72,7 @@ class Game {
                 listeCases[casesBas].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesBas].positionX, listeCases[casesBas].positionY, 60, 60);
-                this.mapInfo.drawMap();
+                //this.mapInfo.drawMap();
                 this.mapInfo.spawnNext();
             }
         }
@@ -82,33 +82,34 @@ class Game {
     /*----------------------------------------------------------------------
     --------------------|| Gestion du tour par tour ||----------------------
     ----------------------------------------------------------------------*/
-
-    // Si au lancement le currentPlayer est le joueur 1 au tour 2 le currentPlayer sera le joueur 2 et le currentEnemy le joueur 1, 
-    // il faut simplement réafecter les variables à chaque tour avec les objets des joueurs (player1 et player2)
-
-    setRound() {
-        if (this.currentPlayer === player1) {
-            this.currentPlayer === player2;
-            this.currentEnemy === player1;
-        } else {
-            this.currentPlayer === player1;
-            this.currentEnemy === player2;
+     setRound() {
+        let players = this.players;
+        
+        if (this.currentPlayer == players[0]) {
+            this.currentPlayer = players[1];
+            this.currentEnemy = players[0];
+            console.log('Le currentPlayer est ' + this.currentPlayer.name);
+        } else if (this.currentPlayer == players[1]) {
+            this.currentPlayer = players[0];
+            this.currentEnemy = players[1];
+            console.log('Le currentPlayer est ' + this.currentPlayer.name);
         }
+
         // Tant que les joueurs ne sont pas côte à côte (= début d'un combat) on réaffiche les cases de dep dispo pour chaque joueur a tour de rôle
-        /*
-        while(this.currentPlayer.positionY !== this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) != 1) 
+        
+        /* while(this.currentPlayer.positionY !== this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) != 1) 
         || this.currentPlayer.positionX !== this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) > 120) ) {
             break;
         } */
     }
 
-    afficherCanvas() {
+    refreshCanvas() {
         this.mapInfo.generateMap();
         this.mapInfo.drawMap();
-        this.mapInfo.spawnNext();
         this.mapInfo.assignObject();
+        this.mapInfo.spawnNext();
         this.setMove();
-        console.log('le canvas est actualisé');
+        console.log('[LE CANVAS EST ACTUALISÉ]');
     }
 
     nextRound() {
@@ -116,8 +117,6 @@ class Game {
         let canvas = this.mapInfo.canvas;
         let elemLeft = canvas.offsetLeft;
         let elemTop = canvas.offsetTop;
-        let currentPlayer = this.currentPlayer;
-        let currentEnemy = this.currentEnemy;
 
         // Evenement au clic
         canvas.addEventListener('click', event => {
@@ -159,7 +158,7 @@ class Game {
                     break;
                 }
             }
-
+            
             // Savoir si la case est accessible ou non
             if (listeCases[caseClick].type !== "casesAccess") {
                 console.log('La case ' + caseClick + ' est inaccessible !');
@@ -170,9 +169,12 @@ class Game {
                     listeCases[caseTest].type = 'inaccess';
                 }
                 // On déplace ensuite l'id du joueur
-                listeCases[currentPlayer.numeroCase].id = 'casevide';
-                listeCases[caseClick].id = currentPlayer.id;
-                this.afficherCanvas();
+                listeCases[this.currentPlayer.numeroCase].id = 'casevide';
+                listeCases[caseClick].id = this.currentPlayer.id;
+                // On passe le tour au joueur adverse
+                this.setRound();
+                // On raffraichi le canvas
+                this.refreshCanvas();
             }
 
         }, false); // fin event click
