@@ -9,6 +9,7 @@ class Game {
         this.currentPlayer = players[0];
         this.currentEnemy = players[1];
         this.casesAccess = [];
+        this.caseClick = null;
     }
 
     /*----------------------------------------------------------------------
@@ -88,29 +89,30 @@ class Game {
         if (this.currentPlayer == players[0]) {
             this.currentPlayer = players[1];
             this.currentEnemy = players[0];
-            console.log('Le currentPlayer est ' + this.currentPlayer.name);
         } else if (this.currentPlayer == players[1]) {
             this.currentPlayer = players[0];
             this.currentEnemy = players[1];
-            console.log('Le currentPlayer est ' + this.currentPlayer.name);
         }
-
-        // Tant que les joueurs ne sont pas côte à côte (= début d'un combat) on réaffiche les cases de dep dispo pour chaque joueur a tour de rôle
-        
-        /* while(this.currentPlayer.positionY !== this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) != 1) 
-        || this.currentPlayer.positionX !== this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) > 120) ) {
-            break;
-        } */
     }
 
+/*----------------------------------------------------------------------
+----------|| Rafraichissement du canvas après déplacement ||------------
+----------------------------------------------------------------------*/
     refreshCanvas() {
         this.mapInfo.generateMap();
         this.mapInfo.drawMap();
         this.mapInfo.assignObject();
-        this.mapInfo.spawnNext();
-        this.setMove();
+        if(this.isNext()) {
+            console.log('lancer le combat');
+        } else {
+            this.setMove();
+        }
         console.log('[LE CANVAS EST ACTUALISÉ]');
     }
+
+/*----------------------------------------------------------------------
+---------------|| Fonction de passage au tour suivant ||----------------
+----------------------------------------------------------------------*/
 
     nextRound() {
         let listeCases = this.mapInfo.listeCases;
@@ -122,64 +124,91 @@ class Game {
         canvas.addEventListener('click', event => {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
-            let caseClick;
 
             // Association d'un n° à la case cliquée
             for (let i = 0; i <= 10; i++) { // 10 cases sur chaque lignes
                 if (x <= (60 * i) && y <= 60) {
-                    caseClick = i - 1;
+                    this.caseClick = i - 1;
                     break;
                 } else if (x <= (60 * i) && y <= 120) {
-                    caseClick = i + 9;
+                    this.caseClick = i + 9;
                     break;
                 } else if (x <= (60 * i) && y <= 180) {
-                    caseClick = i + 19;
+                    this.caseClick = i + 19;
                     break;
                 } else if (x <= (60 * i) && y <= 240) {
-                    caseClick = i + 29;
+                    this.caseClick = i + 29;
                     break;
                 } else if (x <= (60 * i) && y <= 300) {
-                    caseClick = i + 39;
+                    this.caseClick = i + 39;
                     break;
                 } else if (x <= (60 * i) && y <= 360) {
-                    caseClick = i + 49;
+                    this.caseClick = i + 49;
                     break;
                 } else if (x <= (60 * i) && y <= 420) {
-                    caseClick = i + 59;
+                    this.caseClick = i + 59;
                     break;
                 } else if (x <= (60 * i) && y <= 480) {
-                    caseClick = i + 69;
+                    this.caseClick = i + 69;
                     break;
                 } else if (x <= (60 * i) && y <= 540) {
-                    caseClick = i + 79;
+                    this.caseClick = i + 79;
                     break;
                 } else if (x <= (60 * i) && y <= 600) {
-                    caseClick = i + 89;
+                    this.caseClick = i + 89;
                     break;
                 }
             }
-            
+
             // Savoir si la case est accessible ou non
-            if (listeCases[caseClick].type !== "casesAccess") {
-                console.log('La case ' + caseClick + ' est inaccessible !');
+            if (listeCases[this.caseClick].type !== "casesAccess") {
+                console.log('La case ' + this.caseClick + ' est inaccessible !');
             } else {
                 // On réassigne le type 'inaccess' sur chacune des cases contenant le type 'casesAccess'
                 for(let i = 0 ; i < this.casesAccess.length ; i++) {
                     let caseTest = this.casesAccess[i]; //recup de chaque case
                     listeCases[caseTest].type = 'inaccess';
                 }
+                this.getWeapon();
                 // On déplace ensuite l'id du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
-                listeCases[caseClick].id = this.currentPlayer.id;
+                listeCases[this.caseClick].id = this.currentPlayer.id;
                 // On passe le tour au joueur adverse
                 this.setRound();
                 // On raffraichi le canvas
                 this.refreshCanvas();
+                console.log('C\'est à ' + this.currentPlayer.name + ' de jouer');
             }
 
         }, false); // fin event click
 
     } // Fin fonction nextRound
+
+    // Stop de l'event listener du clic
+    isNext(){
+        //let canvas = this.mapInfo.canvas;
+
+        //canvas.removeEventListener('click', event);
+
+        if (this.currentPlayer.positionY == this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) == 1 ) 
+            || this.currentPlayer.positionX == this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) < 120) ) {
+            // condition fonctionnelle mais instruction non
+            //this.removeListener();
+            console.log('Les déplacements ne sont plus possibles !');
+            return true;    
+        } return false;
+    }
+/*----------------------------------------------------------------------
+---------------|| Récupération d'une arme au passage ||-----------------
+----------------------------------------------------------------------*/
+
+    getWeapon(){
+        let listeCases = this.mapInfo.listeCases;
+
+        if(this.caseClick != null && listeCases[this.caseClick].id.includes('arme')){
+            console.log('clic sur une arme');
+        }
+    }
     
     
 

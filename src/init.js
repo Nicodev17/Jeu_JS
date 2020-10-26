@@ -30,6 +30,7 @@ const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4
 //newGame.setRound();
 newGame.setMove();
 newGame.nextRound();
+newGame.getWeapon();
 
 // Affichage visuel de la map
 newMap.drawMap();
