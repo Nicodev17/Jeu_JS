@@ -28,4 +28,14 @@ else if( x <= 540 && y <= (60 + (i*60)) ) { // 120*i au premier tour = 120  OK /
 }
 
 
+
+console.log('clic sur une arme');
+
+let armeRecup = listeCases[this.caseClick].id;
+console.log(listeCases[this.caseClick].id);
+
+this.currentPlayer.weapon = armeRecup;
+console.log(this.currentPlayer.weapon);
+
+
 */

@@ -98,7 +98,7 @@ class GameMap {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
-      listeCases[caseAleatoire].id = "arme" + index;
+      listeCases[caseAleatoire].id = "weapon" + index;
     }
   }
 
@@ -136,16 +136,19 @@ class GameMap {
           case "joueur2":
             image.src = player2.imgUrl;
             break
-          case "arme2":
+          case "weapon1":
+          image.src = weapon1.imgUrl;
+            break
+          case "weapon2":
             image.src = weapon2.imgUrl;
             break
-          case "arme3":
+          case "weapon3":
             image.src = weapon3.imgUrl;
             break
-          case "arme4":
+          case "weapon4":
             image.src = weapon4.imgUrl;
             break
-          case "arme5":
+          case "weapon5":
             image.src = weapon5.imgUrl;
             break
         }

@@ -8,8 +8,8 @@ const weapon3 = new Weapon("weapon3", "Brise Crâne", 15, 'media/armes/arme_3.pn
 const weapon4 = new Weapon("weapon4", "Épée", 20, 'media/armes/arme_4.png');
 const weapon5 = new Weapon("weapon5", "Hache", 25, 'media/armes/arme_5.png');
 
-const player1 = new Player("joueur1", "Arthur", 100, weapon1, 'media/joueurs/joueur_1_1.png');
-const player2 = new Player("joueur2", "Lancelot", 100, weapon1, 'media/joueurs/joueur_2_1.png');
+const player1 = new Player("joueur1", "Arthur", 100, weapon1, 'media/joueurs/joueur1_1.png');
+const player2 = new Player("joueur2", "Lancelot", 100, weapon1, 'media/joueurs/joueur2_1.png');
 
 // MAP
 const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
@@ -30,7 +30,7 @@ const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4
 //newGame.setRound();
 newGame.setMove();
 newGame.nextRound();
-newGame.getWeapon();
+//newGame.getWeapon();
 
 // Affichage visuel de la map
 newMap.drawMap();

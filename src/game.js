@@ -83,9 +83,9 @@ class Game {
     /*----------------------------------------------------------------------
     --------------------|| Gestion du tour par tour ||----------------------
     ----------------------------------------------------------------------*/
-     setRound() {
+    setRound() {
         let players = this.players;
-        
+
         if (this.currentPlayer == players[0]) {
             this.currentPlayer = players[1];
             this.currentEnemy = players[0];
@@ -95,14 +95,14 @@ class Game {
         }
     }
 
-/*----------------------------------------------------------------------
-----------|| Rafraichissement du canvas après déplacement ||------------
-----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------
+    ----------|| Rafraichissement du canvas après déplacement ||------------
+    ----------------------------------------------------------------------*/
     refreshCanvas() {
         this.mapInfo.generateMap();
         this.mapInfo.drawMap();
         this.mapInfo.assignObject();
-        if(this.isNext()) {
+        if (this.isNext()) {
             console.log('lancer le combat');
         } else {
             this.setMove();
@@ -110,9 +110,9 @@ class Game {
         console.log('[LE CANVAS EST ACTUALISÉ]');
     }
 
-/*----------------------------------------------------------------------
----------------|| Fonction de passage au tour suivant ||----------------
-----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------
+    ---------------|| Fonction de passage au tour suivant ||----------------
+    ----------------------------------------------------------------------*/
 
     nextRound() {
         let listeCases = this.mapInfo.listeCases;
@@ -165,7 +165,7 @@ class Game {
                 console.log('La case ' + this.caseClick + ' est inaccessible !');
             } else {
                 // On réassigne le type 'inaccess' sur chacune des cases contenant le type 'casesAccess'
-                for(let i = 0 ; i < this.casesAccess.length ; i++) {
+                for (let i = 0; i < this.casesAccess.length; i++) {
                     let caseTest = this.casesAccess[i]; //recup de chaque case
                     listeCases[caseTest].type = 'inaccess';
                 }
@@ -184,32 +184,51 @@ class Game {
 
     } // Fin fonction nextRound
 
-    // Stop de l'event listener du clic
-    isNext(){
-        //let canvas = this.mapInfo.canvas;
-
-        //canvas.removeEventListener('click', event);
-
-        if (this.currentPlayer.positionY == this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) == 1 ) 
-            || this.currentPlayer.positionX == this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) < 120) ) {
-            // condition fonctionnelle mais instruction non
-            //this.removeListener();
+    /*----------------------------------------------------------------------
+    -------|| Arrêt des déplacements quand les joueurs sont à côté ||-------
+    ----------------------------------------------------------------------*/
+    isNext() {
+        if (this.currentPlayer.positionY == this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) == 1)
+            || this.currentPlayer.positionX == this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) < 120)) {
             console.log('Les déplacements ne sont plus possibles !');
-            return true;    
+            return true;
         } return false;
     }
-/*----------------------------------------------------------------------
----------------|| Récupération d'une arme au passage ||-----------------
-----------------------------------------------------------------------*/
 
-    getWeapon(){
+    /*----------------------------------------------------------------------
+    ---------------|| Récupération d'une arme au passage ||-----------------
+    ----------------------------------------------------------------------*/
+    getWeapon() {
         let listeCases = this.mapInfo.listeCases;
-
-        if(this.caseClick != null && listeCases[this.caseClick].id.includes('arme')){
-            console.log('clic sur une arme');
-        }
+        
+        if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {        
+            switch (listeCases[this.caseClick].id) {
+                case "weapon1":
+                    this.currentPlayer.weapon = weapon1;
+                    this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_1.png';
+                    console.log('# ' + this.currentPlayer.name + ' équipe la Lance');
+                    break
+                case "weapon2":
+                    this.currentPlayer.weapon = weapon2;
+                    this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_2.png';
+                    console.log('# ' + this.currentPlayer.name + ' équipe la Dague');
+                    break
+                case "weapon3":
+                    this.currentPlayer.weapon = weapon3;
+                    this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_3.png';
+                    console.log('# ' + this.currentPlayer.name + ' équipe le Brise Crâne');
+                    break
+                case "weapon4":
+                    this.currentPlayer.weapon = weapon4;
+                    this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_4.png';
+                    console.log('# ' + this.currentPlayer.name + ' équipe l\'Épée');
+                    break
+                case "weapon5":
+                    this.currentPlayer.weapon = weapon5;
+                    this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_5.png';
+                    console.log('# ' + this.currentPlayer.name + ' équipe la Hache');
+                    break
+            }
+        }           
     }
-    
-    
-
 } // Fin de la classe Game
