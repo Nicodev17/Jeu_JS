@@ -210,10 +210,10 @@ class GameMap {
     let objetArme3 = weapon3;
     let objetArme4 = weapon4;
     let objetArme5 = weapon5;
-    let caseArme2 = listeCases.find(element => element.id === "arme2");
-    let caseArme3 = listeCases.find(element => element.id === "arme3");
-    let caseArme4 = listeCases.find(element => element.id === "arme4");
-    let caseArme5 = listeCases.find(element => element.id === "arme5");
+    let caseArme2 = listeCases.find(element => element.id === "weapon2");
+    let caseArme3 = listeCases.find(element => element.id === "weapon3");
+    let caseArme4 = listeCases.find(element => element.id === "weapon4");
+    let caseArme5 = listeCases.find(element => element.id === "weapon5");
 
     this.weapons[1] = Object.assign(objetArme2, caseArme2);
     this.weapons[2] = Object.assign(objetArme3, caseArme3);

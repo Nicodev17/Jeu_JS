@@ -10,11 +10,13 @@ class Game {
         this.currentEnemy = players[1];
         this.casesAccess = [];
         this.caseClick = null;
+        this.oldWeapon;
+        this.caseArmeClick;
     }
 
-    /*----------------------------------------------------------------------
-    -----------|| Affichage des mouv des joueurs possibles ||---------------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+------------|| Affichage des mouv possibles du joueur  ||---------------
+----------------------------------------------------------------------*/
     setMove() {
         let listeCases = this.mapInfo.listeCases;
 
@@ -26,8 +28,6 @@ class Game {
                 listeCases[casesGauche].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesGauche].positionX, listeCases[casesGauche].positionY, 60, 60);
-                //this.mapInfo.drawMap();
-                this.mapInfo.spawnNext();
             } else {
                 break;
             }
@@ -41,8 +41,6 @@ class Game {
                 listeCases[casesDroite].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesDroite].positionX, listeCases[casesDroite].positionY, 60, 60);
-                //this.mapInfo.drawMap();
-                this.mapInfo.spawnNext();
             } else {
                 break;
             }
@@ -58,8 +56,6 @@ class Game {
                 listeCases[casesHaut].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesHaut].positionX, listeCases[casesHaut].positionY, 60, 60);
-                //this.mapInfo.drawMap();
-                this.mapInfo.spawnNext();
             }
         }
 
@@ -73,16 +69,14 @@ class Game {
                 listeCases[casesBas].type = 'casesAccess';
                 this.mapInfo.context.fillStyle = "#75706349";
                 this.mapInfo.context.fillRect(listeCases[casesBas].positionX, listeCases[casesBas].positionY, 60, 60);
-                //this.mapInfo.drawMap();
-                this.mapInfo.spawnNext();
             }
         }
 
     } // Fin fonction setMove
 
-    /*----------------------------------------------------------------------
-    --------------------|| Gestion du tour par tour ||----------------------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+--------------------|| Gestion du tour par tour ||----------------------
+----------------------------------------------------------------------*/
     setRound() {
         let players = this.players;
 
@@ -95,9 +89,9 @@ class Game {
         }
     }
 
-    /*----------------------------------------------------------------------
-    ----------|| Rafraichissement du canvas après déplacement ||------------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+----------|| Rafraichissement du canvas après déplacement ||------------
+----------------------------------------------------------------------*/
     refreshCanvas() {
         this.mapInfo.generateMap();
         this.mapInfo.drawMap();
@@ -107,12 +101,12 @@ class Game {
         } else {
             this.setMove();
         }
-        console.log('[LE CANVAS EST ACTUALISÉ]');
+        console.log('[Le canvas est actualisé]');
     }
 
-    /*----------------------------------------------------------------------
-    ---------------|| Fonction de passage au tour suivant ||----------------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+---------------|| Fonction de passage au tour suivant ||----------------
+----------------------------------------------------------------------*/
 
     nextRound() {
         let listeCases = this.mapInfo.listeCases;
@@ -120,13 +114,13 @@ class Game {
         let elemLeft = canvas.offsetLeft;
         let elemTop = canvas.offsetTop;
 
-        // Evenement au clic
+        // Event au clic
         canvas.addEventListener('click', event => {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
 
             // Association d'un n° à la case cliquée
-            for (let i = 0; i <= 10; i++) { // 10 cases sur chaque lignes
+            for (let i = 0; i <= 10; i++) {
                 if (x <= (60 * i) && y <= 60) {
                     this.caseClick = i - 1;
                     break;
@@ -166,27 +160,33 @@ class Game {
             } else {
                 // On réassigne le type 'inaccess' sur chacune des cases contenant le type 'casesAccess'
                 for (let i = 0; i < this.casesAccess.length; i++) {
-                    let caseTest = this.casesAccess[i]; //recup de chaque case
+                    let caseTest = this.casesAccess[i];
                     listeCases[caseTest].type = 'inaccess';
                 }
+                // Si clic sur une arme
                 this.getWeapon();
-                // On déplace ensuite l'id du joueur
+                // Vidage de la case actuelle du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
+                // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
+                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase == this.caseArmeClick) {
+                    listeCases[this.caseArmeClick].id = this.oldWeapon;
+                }
+                // On écrit l'id du joueur sur la nouvelle case
                 listeCases[this.caseClick].id = this.currentPlayer.id;
                 // On passe le tour au joueur adverse
                 this.setRound();
-                // On raffraichi le canvas
+                // On raffraichit le canvas
                 this.refreshCanvas();
-                console.log('C\'est à ' + this.currentPlayer.name + ' de jouer');
+                console.log('=> C\'est à ' + this.currentPlayer.name + ' de jouer');
             }
 
-        }, false); // fin event click
+        }, false); // fin fonction event click
 
     } // Fin fonction nextRound
 
-    /*----------------------------------------------------------------------
-    -------|| Arrêt des déplacements quand les joueurs sont à côté ||-------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+-------|| Arrêt des déplacements quand les joueurs sont à côté ||-------
+----------------------------------------------------------------------*/
     isNext() {
         if (this.currentPlayer.positionY == this.currentEnemy.positionY && (Math.abs(this.currentPlayer.numeroCase - this.currentEnemy.numeroCase) == 1)
             || this.currentPlayer.positionX == this.currentEnemy.positionX && (Math.abs(this.currentPlayer.positionY - this.currentEnemy.positionY) < 120)) {
@@ -195,38 +195,44 @@ class Game {
         } return false;
     }
 
-    /*----------------------------------------------------------------------
-    ---------------|| Récupération d'une arme au passage ||-----------------
-    ----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+---------------|| Récupération d'une arme au passage ||-----------------
+----------------------------------------------------------------------*/
     getWeapon() {
         let listeCases = this.mapInfo.listeCases;
         
-        if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {        
+        if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {
+
+            // On stock l'ancienne arme du joueur dans une variable au moment où celui ci clique sur une case d'arme
+            this.oldWeapon = this.currentPlayer.weapon.id;
+            // Quand la case cliquée est une arme, on attribue à la variable caseArmeClick le numero de la case cliquée
+            this.caseArmeClick = listeCases[this.caseClick].numeroCase;
+
             switch (listeCases[this.caseClick].id) {
                 case "weapon1":
                     this.currentPlayer.weapon = weapon1;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_1.png';
-                    console.log('# ' + this.currentPlayer.name + ' équipe la Lance');
+                    console.log('~ ' + this.currentPlayer.name + ' équipe la Lance de Gardien ~');
                     break
                 case "weapon2":
                     this.currentPlayer.weapon = weapon2;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_2.png';
-                    console.log('# ' + this.currentPlayer.name + ' équipe la Dague');
+                    console.log('~ ' + this.currentPlayer.name + ' équipe la Dague d\'Assassin ~');
                     break
                 case "weapon3":
                     this.currentPlayer.weapon = weapon3;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_3.png';
-                    console.log('# ' + this.currentPlayer.name + ' équipe le Brise Crâne');
+                    console.log('~ ' + this.currentPlayer.name + ' équipe le Brise Crâne de Barbare ~');
                     break
                 case "weapon4":
                     this.currentPlayer.weapon = weapon4;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_4.png';
-                    console.log('# ' + this.currentPlayer.name + ' équipe l\'Épée');
+                    console.log('~ ' + this.currentPlayer.name + ' équipe l\'Épée de Chevalier ~');
                     break
                 case "weapon5":
                     this.currentPlayer.weapon = weapon5;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_5.png';
-                    console.log('# ' + this.currentPlayer.name + ' équipe la Hache');
+                    console.log('~ ' + this.currentPlayer.name + ' équipe la Hache de Berserk ~');
                     break
             }
         }           
