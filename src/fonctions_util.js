@@ -28,4 +28,15 @@ else if( x <= 540 && y <= (60 + (i*60)) ) { // 120*i au premier tour = 120  OK /
 }
 
 
+replaceCase() {
+        let listeCases = this.mapInfo.listeCases;
+
+        if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon') ) {
+            listeCases[this.caseClick].id = this.currentPlayer.weapon.id; 
+        } else {
+            
+        }
+    }
+
+
 */
