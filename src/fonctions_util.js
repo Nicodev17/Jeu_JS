@@ -17,26 +17,4 @@ console.log(testObstacle); */
 // util de game
 //console.log(this.currentPlayer.weapon.name);   
 //let emptyCase = listeCases.filter(element => element.id === "casevide"); // filtre les cases du tableau ayant pour id casevide
-//console.log(emptyCase);
-
-
-/* TEST de else if pour le clic sur les cases
-
-else if( x <= 540 && y <= (60 + (i*60)) ) { // 120*i au premier tour = 120  OK / au 2eme on veut 180 donc => 60 + (i*60) (i valant 2 au 2e tour)
-  console.log('Clic en case ' + ((9*i) + i) );  //9*i au tour 2 = 18+1 = 19 mais au tour 3 9*i = 27+1=28 => (9*i) + i
-  break;
-}
-
-
-replaceCase() {
-        let listeCases = this.mapInfo.listeCases;
-
-        if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon') ) {
-            listeCases[this.caseClick].id = this.currentPlayer.weapon.id; 
-        } else {
-            
-        }
-    }
-
-
-*/
+//console.log(emptyCase); */

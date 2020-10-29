@@ -12,6 +12,7 @@ class Game {
         this.caseClick = null;
         this.oldWeapon;
         this.caseArmeClick;
+        this.caseArmeClickId;
     }
 
 /*----------------------------------------------------------------------
@@ -165,11 +166,17 @@ class Game {
                 }
                 // Si clic sur une arme
                 this.getWeapon();
+                
                 // Vidage de la case actuelle du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
-                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase == this.caseArmeClick) {
+                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase === this.caseArmeClick && listeCases[this.caseClick].id.includes('casevide')) {
                     listeCases[this.caseArmeClick].id = this.oldWeapon;
+                    console.log('arme de la case précédente changée');
+                } else if (!listeCases[this.caseClick].id.includes('casevide')) {
+                    // ici la condition est mauvaise puisque le 'test' ne devrait s'afficher que lorsqu'on passe d'une case arme a une autre case arme !
+                    // On pourra ensuite appliquer l'ancienne arme a l'ancienne case
+                    console.log('test');
                 }
                 // On écrit l'id du joueur sur la nouvelle case
                 listeCases[this.caseClick].id = this.currentPlayer.id;
@@ -178,6 +185,7 @@ class Game {
                 // On raffraichit le canvas
                 this.refreshCanvas();
                 console.log('=> C\'est à ' + this.currentPlayer.name + ' de jouer');
+
             }
 
         }, false); // fin fonction event click
@@ -203,7 +211,7 @@ class Game {
         
         if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {
 
-            // On stock l'ancienne arme du joueur dans une variable au moment où celui ci clique sur une case d'arme
+            // Ancienne arme
             this.oldWeapon = this.currentPlayer.weapon.id;
             // Quand la case cliquée est une arme, on attribue à la variable caseArmeClick le numero de la case cliquée
             this.caseArmeClick = listeCases[this.caseClick].numeroCase;
