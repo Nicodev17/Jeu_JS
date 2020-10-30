@@ -12,7 +12,6 @@ class Game {
         this.caseClick = null;
         this.oldWeapon;
         this.caseArmeClick;
-        this.caseArmeClickId;
     }
 
 /*----------------------------------------------------------------------
@@ -94,6 +93,10 @@ class Game {
 ----------|| Rafraichissement du canvas après déplacement ||------------
 ----------------------------------------------------------------------*/
     refreshCanvas() {
+        let largeurMap = this.mapInfo.largeurMap;
+        let hauteurMap = this.mapInfo.hauteurMap;
+
+        this.mapInfo.context.clearRect(0, 0, largeurMap, hauteurMap);
         this.mapInfo.generateMap();
         this.mapInfo.drawMap();
         this.mapInfo.assignObject();
@@ -165,18 +168,16 @@ class Game {
                     listeCases[caseTest].type = 'inaccess';
                 }
                 // Si clic sur une arme
-                this.getWeapon();
                 
                 // Vidage de la case actuelle du joueur
+                this.getWeapon();
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
-                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase === this.caseArmeClick && listeCases[this.caseClick].id.includes('casevide')) {
-                    listeCases[this.caseArmeClick].id = this.oldWeapon;
+
+                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase === this.caseArmeClick) {
+                    listeCases[this.currentPlayer.numeroCase].id = this.oldWeapon;
                     console.log('arme de la case précédente changée');
-                } else if (!listeCases[this.caseClick].id.includes('casevide')) {
-                    // ici la condition est mauvaise puisque le 'test' ne devrait s'afficher que lorsqu'on passe d'une case arme a une autre case arme !
-                    // On pourra ensuite appliquer l'ancienne arme a l'ancienne case
-                    console.log('test');
+                    console.log(this.caseArmeClick);
                 }
                 // On écrit l'id du joueur sur la nouvelle case
                 listeCases[this.caseClick].id = this.currentPlayer.id;
@@ -185,7 +186,6 @@ class Game {
                 // On raffraichit le canvas
                 this.refreshCanvas();
                 console.log('=> C\'est à ' + this.currentPlayer.name + ' de jouer');
-
             }
 
         }, false); // fin fonction event click
@@ -208,9 +208,10 @@ class Game {
 ----------------------------------------------------------------------*/
     getWeapon() {
         let listeCases = this.mapInfo.listeCases;
+        let changeArme = '.arme_' + String(this.currentPlayer.id);
+        let changeDegats = '#degats_' + String(this.currentPlayer.id)
         
         if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {
-
             // Ancienne arme
             this.oldWeapon = this.currentPlayer.weapon.id;
             // Quand la case cliquée est une arme, on attribue à la variable caseArmeClick le numero de la case cliquée
@@ -221,26 +222,36 @@ class Game {
                     this.currentPlayer.weapon = weapon1;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_1.png';
                     console.log('~ ' + this.currentPlayer.name + ' équipe la Lance de Gardien ~');
+                    document.querySelector(changeArme).innerHTML = '<img src="media/armes/arme_1.png" alt="Arme 1"> </img>';
+                    document.querySelector(changeDegats).innerHTML = weapon1.damage;  
                     break
                 case "weapon2":
                     this.currentPlayer.weapon = weapon2;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_2.png';
                     console.log('~ ' + this.currentPlayer.name + ' équipe la Dague d\'Assassin ~');
+                    document.querySelector(changeArme).innerHTML = '<img src="media/armes/arme_2.png" alt="Arme 2"> </img>';
+                    document.querySelector(changeDegats).innerHTML = weapon2.damage;  
                     break
                 case "weapon3":
                     this.currentPlayer.weapon = weapon3;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_3.png';
                     console.log('~ ' + this.currentPlayer.name + ' équipe le Brise Crâne de Barbare ~');
+                    document.querySelector(changeArme).innerHTML = '<img src="media/armes/arme_3.png" alt="Arme 3"> </img>';
+                    document.querySelector(changeDegats).innerHTML = weapon3.damage;  
                     break
                 case "weapon4":
                     this.currentPlayer.weapon = weapon4;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_4.png';
                     console.log('~ ' + this.currentPlayer.name + ' équipe l\'Épée de Chevalier ~');
+                    document.querySelector(changeArme).innerHTML = '<img src="media/armes/arme_4.png" alt="Arme 4"> </img>';
+                    document.querySelector(changeDegats).innerHTML = weapon4.damage;  
                     break
                 case "weapon5":
                     this.currentPlayer.weapon = weapon5;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_5.png';
                     console.log('~ ' + this.currentPlayer.name + ' équipe la Hache de Berserk ~');
+                    document.querySelector(changeArme).innerHTML = '<img src="media/armes/arme_5.png" alt="Arme 5"> </img>';
+                    document.querySelector(changeDegats).innerHTML = weapon5.damage;  
                     break
             }
         }           

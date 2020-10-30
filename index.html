@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +14,60 @@
 <body>
     <h1> CHIVALRY WAR </h1>
 
-    <div class="gameDiv">
-        <canvas id="plateau" width="600" height="600"> LE JEU S'AFFICHE ICI </canvas>
+    <div class="displayDiv">
+
+        <div class="statPlayer1">
+            <h2> Arthur </h2>
+
+            <div class="pv">
+                <h3> PTS DE VIE </h3>
+                <p id="ptsVie"> 100 </p>
+            </div>
+
+            <div class="arme">
+                <h3> ARME ACTUELLE </h3>
+                <div class="arme_joueur1">
+                    <img src="media/armes/arme_1.png" alt="Arme 1">
+                </div>
+            </div>
+
+            <div class="degats">
+                <h3> DEGATS </h3>
+                <p id="degats_joueur1"> 10 </p>
+            </div>
+        </div>
+
+        <div class="gameDiv">
+            <canvas id="plateau" width="600" height="600"> LE JEU S'AFFICHE ICI </canvas>
+        </div>
+
+        <div class="statPlayer2">
+            <h2> Lancelot </h2>
+
+            <div class="pv">
+                <h3> PTS DE VIE </h3>
+                <p id="ptsVie"> 100 </p>
+            </div>
+
+            <div class="arme">
+                <h3> ARME ACTUELLE </h3>
+
+                <div class="arme_joueur2">
+                    <img src="media/armes/arme_1.png" alt="Arme 1">
+                </div>
+            </div>
+
+            <div class="degats">
+                <h3> DEGATS </h3>
+
+                <p id="degats_joueur2"> 10 </p>
+            </div>
+        </div>
+
     </div>
 
-    <div class="gameInfo"> 
-        <div class="statPlayer1"> 
-            <p class="test"> Joueur 1 </p>
-        </div>
-
-        <div class="statPlayer2"> 
-            <p class="test2"> Joueur 2 </p>
-        </div>
-
-        <div class="statWeapons">
-            <p class="test3"> Les Armes : </p>
-        </div>
-
+    <div class="bandeauArmes">
+        <img src="media/affichage/bandeau_armes.jpg" alt="Bandeau des armes">
     </div>
 
     <!-- Fichiers JS -->
