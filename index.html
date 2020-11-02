@@ -12,12 +12,37 @@
 </head>
 
 <body>
-    <h1> CHIVALRY WAR </h1>
+    
+    <div class="zoneTitre">
+        <h1> CHIVALRY WAR </h1>
+    </div>
+
+    <div class="overlay">
+        <div class="gameInfo"> <p> Préparez-vos armes, un combat va commencer ! </p> </div>
+        <div class="combatInfo"> 
+            <p id="textCombat"> Souhaite-tu attaquer ou te défendre ? </p>
+            <div id="choix">
+                <button id="buttonAttack"> ATTAQUER </button>
+                <button id="buttonDefend"> SE DEFENDRE </button>
+            </div>
+        </div>
+    </div>
+
+    <audio src="media/music/mediev.mp3" id="audioGame"></audio>
+    <audio src="media/music/bip.mp3" id="bipAudio"></audio>
+
+    <button id="musicButton"> MUSIC ON </button>
 
     <div class="displayDiv">
 
         <div class="statPlayer1">
             <h2> Arthur </h2>
+
+            <div>
+                <div class="imageJoueur">
+                    <img src="media/affichage/face_joueur1.png" alt="Portrait Joueur 1">
+                </div>
+            </div>
 
             <div class="pv">
                 <h3> PTS DE VIE </h3>
@@ -43,6 +68,12 @@
 
         <div class="statPlayer2">
             <h2> Lancelot </h2>
+
+            <div>
+                <div class="imageJoueur">
+                    <img src="media/affichage/face_joueur2.png" alt="Portrait Joueur 2">
+                </div>
+            </div>
 
             <div class="pv">
                 <h3> PTS DE VIE </h3>

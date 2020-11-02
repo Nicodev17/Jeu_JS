@@ -13,6 +13,9 @@ const player2 = new Player("joueur2", "Lancelot", 100, weapon1, 'media/joueurs/j
 
 // MAP
 const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
+
+music();
+
 newMap.generateMap();
 newMap.generateObstacles();
 newMap.generatePlayers();

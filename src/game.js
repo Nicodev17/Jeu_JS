@@ -102,6 +102,8 @@ class Game {
         this.mapInfo.assignObject();
         if (this.isNext()) {
             console.log('lancer le combat');
+            this.fightStart();
+            this.fightPart();
         } else {
             this.setMove();
         }
@@ -122,6 +124,7 @@ class Game {
         canvas.addEventListener('click', event => {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
+            const bipAudio = document.querySelector('#bipAudio');
 
             // Association d'un n° à la case cliquée
             for (let i = 0; i <= 10; i++) {
@@ -161,6 +164,8 @@ class Game {
             // Savoir si la case est accessible ou non
             if (listeCases[this.caseClick].type !== "casesAccess") {
                 console.log('La case ' + this.caseClick + ' est inaccessible !');
+                bipAudio.play();
+                bipAudio.volume = 0.2;
             } else {
                 // On réassigne le type 'inaccess' sur chacune des cases contenant le type 'casesAccess'
                 for (let i = 0; i < this.casesAccess.length; i++) {
@@ -168,12 +173,10 @@ class Game {
                     listeCases[caseTest].type = 'inaccess';
                 }
                 // Si clic sur une arme
-                
-                // Vidage de la case actuelle du joueur
                 this.getWeapon();
+                // Vidage de la case actuelle du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
-
                 if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase === this.caseArmeClick) {
                     listeCases[this.currentPlayer.numeroCase].id = this.oldWeapon;
                     console.log('arme de la case précédente changée');
@@ -256,4 +259,64 @@ class Game {
             }
         }           
     }
+/*----------------------------------------------------------------------
+------------------------------|| COMBAT ||------------------------------
+----------------------------------------------------------------------*/
+
+    fightStart(){
+        const zoneInfo = document.querySelector(".overlay");
+        const infoStartFight = document.querySelector(".gameInfo");
+
+        zoneInfo.setAttribute('style', 'visibility:visible');
+        infoStartFight.setAttribute('style', 'display:block');
+        $(".gameInfo").delay(1500).fadeOut("slow")
+    }
+
+    fightPart(){
+        const zoneInfo = document.querySelector(".overlay");
+        const chooseFight = document.querySelector(".combatInfo");
+        const buttonAttack = document.querySelector("#buttonAttack");
+        const buttonDefend = document.querySelector("#buttonDefend");
+        const textFight = document.querySelector("#textCombat");  
+        
+        textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
+        
+        chooseFight.setAttribute('style', 'visibility:visible');
+        $(".combatInfo").delay(2000).fadeIn("slow")
+        
+        buttonAttack.addEventListener("click", event => {
+            console.log('Le joueur ' + this.currentPlayer.name + ' a choisi d\'attaquer !');
+
+            //appeler ici la fonction d'attaque
+            this.chooseAttack()
+
+            this.setRound();
+            textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
+        });
+        
+        buttonDefend.addEventListener("click", event => {
+            console.log('Le joueur ' + this.currentPlayer.name + ' a choisi de se défendre !');
+
+            //appeler ici la fonction de défense
+            this.chooseDefend();
+
+            this.setRound();
+            textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
+        });
+    }
+
+    chooseAttack(){
+        let weaponWear = this.currentPlayer.weapon.damage;
+
+        console.log('L\'arme de ' + this.currentPlayer.name + ' fait ' + weaponWear + ' de dégats' );
+    }
+
+    chooseDefend(){
+        let weaponEnemy = this.currentEnemy.weapon.damage;
+        let damageDivised = weaponEnemy /2;
+
+        console.log('L\'arme de ' + this.currentEnemy.name + ' va causer ' + damageDivised + ' de dégats à ' + this.currentPlayer.name + ' au tour suivant');
+        
+    }
+
 } // Fin de la classe Game
