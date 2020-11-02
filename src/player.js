@@ -6,9 +6,9 @@ class Player{
         this.weapon = weapon;
         this.defense = false;
         this.imgUrl = imgUrl;
-        this.ancienne_arme = -1; // Si une autre arme est ramassée, celle équipée tombe sur l'emplacement
     }
 
+    /*
     // Gestion d'un joueur touché
     isTouched(damage) {
         if (this.defense == true){
@@ -30,5 +30,5 @@ class Player{
     fight(victim) {
         victim.isTouched(this.weapon.damage);
         return true;
-    }
+    } */
 } 

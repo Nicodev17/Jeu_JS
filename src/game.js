@@ -11,7 +11,7 @@ class Game {
         this.casesAccess = [];
         this.caseClick = null;
         this.oldWeapon;
-        this.caseArmeClick;
+        this.victory;
     }
 
 /*----------------------------------------------------------------------
@@ -101,7 +101,7 @@ class Game {
         this.mapInfo.drawMap();
         this.mapInfo.assignObject();
         if (this.isNext()) {
-            console.log('lancer le combat');
+            console.log('Le combat débute');
             this.fightStart();
             this.fightPart();
         } else {
@@ -173,21 +173,27 @@ class Game {
                     listeCases[caseTest].type = 'inaccess';
                 }
                 // Si clic sur une arme
-                this.getWeapon();
                 // Vidage de la case actuelle du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
+                listeCases[this.currentPlayer.numeroCase].player = null;
+                
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
-                if (this.caseArmeClick != undefined && listeCases[this.currentPlayer.numeroCase].numeroCase === this.caseArmeClick) {
-                    listeCases[this.currentPlayer.numeroCase].id = this.oldWeapon;
-                    console.log('arme de la case précédente changée');
-                    console.log(this.caseArmeClick);
+                if (listeCases[this.currentPlayer.numeroCase].weapon != null && listeCases[this.currentPlayer.numeroCase].weapon.includes('weapon')) {
+                    listeCases[this.currentPlayer.numeroCase].weapon = this.oldWeapon;
+                    listeCases[this.currentPlayer.numeroCase].id = "weapon";
+                    console.log('L\'arme de la case précédente a été changée');
                 }
+
+                this.getWeapon();
+                
                 // On écrit l'id du joueur sur la nouvelle case
-                listeCases[this.caseClick].id = this.currentPlayer.id;
+                listeCases[this.caseClick].id = "joueur";
+                listeCases[this.caseClick].player = this.currentPlayer.id;
+                
                 // On passe le tour au joueur adverse
                 this.setRound();
-                // On raffraichit le canvas
                 this.refreshCanvas();
+                // On raffraichit le canvas
                 console.log('=> C\'est à ' + this.currentPlayer.name + ' de jouer');
             }
 
@@ -212,15 +218,13 @@ class Game {
     getWeapon() {
         let listeCases = this.mapInfo.listeCases;
         let changeArme = '.arme_' + String(this.currentPlayer.id);
-        let changeDegats = '#degats_' + String(this.currentPlayer.id)
+        let changeDegats = '#degats_' + String(this.currentPlayer.id);
         
         if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {
-            // Ancienne arme
-            this.oldWeapon = this.currentPlayer.weapon.id;
-            // Quand la case cliquée est une arme, on attribue à la variable caseArmeClick le numero de la case cliquée
-            this.caseArmeClick = listeCases[this.caseClick].numeroCase;
 
-            switch (listeCases[this.caseClick].id) {
+            this.oldWeapon = this.currentPlayer.weapon.id;
+
+            switch (listeCases[this.caseClick].weapon) {
                 case "weapon1":
                     this.currentPlayer.weapon = weapon1;
                     this.currentPlayer.imgUrl = 'media/joueurs/' + String(this.currentPlayer.id) + '_1.png';
@@ -263,7 +267,7 @@ class Game {
 ------------------------------|| COMBAT ||------------------------------
 ----------------------------------------------------------------------*/
 
-    fightStart(){
+    fightStart() {
         const zoneInfo = document.querySelector(".overlay");
         const infoStartFight = document.querySelector(".gameInfo");
 
@@ -272,12 +276,13 @@ class Game {
         $(".gameInfo").delay(1500).fadeOut("slow")
     }
 
-    fightPart(){
+    fightPart() {
         const zoneInfo = document.querySelector(".overlay");
         const chooseFight = document.querySelector(".combatInfo");
         const buttonAttack = document.querySelector("#buttonAttack");
         const buttonDefend = document.querySelector("#buttonDefend");
-        const textFight = document.querySelector("#textCombat");  
+        const textFight = document.querySelector("#textCombat");
+        const startAndEndFight = document.querySelector(".gameInfo");
         
         textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
         
@@ -286,12 +291,18 @@ class Game {
         
         buttonAttack.addEventListener("click", event => {
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi d\'attaquer !');
-
+            
             //appeler ici la fonction d'attaque
             this.chooseAttack()
 
             this.setRound();
             textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
+
+            if(this.victory == 1){
+                chooseFight.setAttribute('style', 'display:none');
+                startAndEndFight.setAttribute('style', 'display:block');
+                startAndEndFight.innerHTML = '<p> Bien joué ! ' + this.currentEnemy.name + ' remporte le combat ! </p>';
+            }
         });
         
         buttonDefend.addEventListener("click", event => {
@@ -303,20 +314,35 @@ class Game {
             this.setRound();
             textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
         });
+
     }
 
     chooseAttack(){
-        let weaponWear = this.currentPlayer.weapon.damage;
+        let weaponWearDamage = this.currentPlayer.weapon.damage;
+        let changeVita = '#ptsVie_' + String(this.currentEnemy.id);
+        
+        if (this.currentEnemy.defense == true){
+            this.currentEnemy.health = this.currentEnemy.health - (weaponWearDamage/2);
+            this.currentEnemy.defense = false;
+        } else {
+            this.currentEnemy.health = this.currentEnemy.health - weaponWearDamage;
+        }
+        console.log('L\'attaque de ' + this.currentPlayer.name + ' réduit la vie de ' + this.currentEnemy.name + ' à ' + this.currentEnemy.health);
+        document.querySelector(changeVita).innerHTML = this.currentEnemy.health;
 
-        console.log('L\'arme de ' + this.currentPlayer.name + ' fait ' + weaponWear + ' de dégats' );
+        if(this.currentPlayer.health <= 0 || this.currentEnemy.health <= 0){
+            console.log('le combat est terminé ! ' + this.currentPlayer.name + ' a gagné !');
+            this.victory = 1;
+        }
     }
 
     chooseDefend(){
         let weaponEnemy = this.currentEnemy.weapon.damage;
         let damageDivised = weaponEnemy /2;
-
-        console.log('L\'arme de ' + this.currentEnemy.name + ' va causer ' + damageDivised + ' de dégats à ' + this.currentPlayer.name + ' au tour suivant');
         
+        this.currentPlayer.defense = true;
+        console.log('L\'arme de ' + this.currentEnemy.name + ' va causer ' + damageDivised + ' de dégats à ' + this.currentPlayer.name + ' au tour suivant');
+        return this.currentPlayer.defense;
     }
 
 } // Fin de la classe Game
