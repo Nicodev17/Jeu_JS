@@ -176,7 +176,7 @@ class Game {
                 // Vidage de la case actuelle du joueur
                 listeCases[this.currentPlayer.numeroCase].id = 'casevide';
                 listeCases[this.currentPlayer.numeroCase].player = null;
-                
+
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
                 if (listeCases[this.currentPlayer.numeroCase].weapon != null && listeCases[this.currentPlayer.numeroCase].weapon.includes('weapon')) {
                     listeCases[this.currentPlayer.numeroCase].weapon = this.oldWeapon;
@@ -291,35 +291,33 @@ class Game {
         
         buttonAttack.addEventListener("click", event => {
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi d\'attaquer !');
-            
-            //appeler ici la fonction d'attaque
             this.chooseAttack()
-
             this.setRound();
+
             textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
 
+            // Détection de la victoire
             if(this.victory == 1){
                 chooseFight.setAttribute('style', 'display:none');
                 startAndEndFight.setAttribute('style', 'display:block');
-                startAndEndFight.innerHTML = '<p> Bien joué ! ' + this.currentEnemy.name + ' remporte le combat ! </p>';
+                startAndEndFight.innerHTML = '<p> Le combat est terminé ! ' + this.currentEnemy.name + ' a gagné l\'affrontement ! </p>';
             }
         });
         
         buttonDefend.addEventListener("click", event => {
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi de se défendre !');
-
-            //appeler ici la fonction de défense
             this.chooseDefend();
-
             this.setRound();
             textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
         });
-
     }
 
     chooseAttack(){
         let weaponWearDamage = this.currentPlayer.weapon.damage;
-        let changeVita = '#ptsVie_' + String(this.currentEnemy.id);
+        const changeVita = '#ptsVie_' + String(this.currentEnemy.id);
+        const updateBarre = '#barre_' + String(this.currentEnemy.id);
+        const changeImgDeath = '.image_' + String(this.currentEnemy.id);
+        const changeImgVictory = '.image_' + String(this.currentPlayer.id);
         
         if (this.currentEnemy.defense == true){
             this.currentEnemy.health = this.currentEnemy.health - (weaponWearDamage/2);
@@ -328,10 +326,24 @@ class Game {
             this.currentEnemy.health = this.currentEnemy.health - weaponWearDamage;
         }
         console.log('L\'attaque de ' + this.currentPlayer.name + ' réduit la vie de ' + this.currentEnemy.name + ' à ' + this.currentEnemy.health);
-        document.querySelector(changeVita).innerHTML = this.currentEnemy.health;
 
+        // Pour empecher des PV negatifs
+        if(this.currentPlayer.health < 0 || this.currentEnemy.health < 0){
+            this.currentPlayer.health = 0;
+            this.currentEnemy.health = 0;
+        }
+
+        document.querySelector(changeVita).innerHTML = this.currentEnemy.health;
+        
+        $(updateBarre).animate({
+            "value": this.currentEnemy.health
+        }, 800, "swing");
+        
+        // Victoire
         if(this.currentPlayer.health <= 0 || this.currentEnemy.health <= 0){
-            console.log('le combat est terminé ! ' + this.currentPlayer.name + ' a gagné !');
+            document.querySelector(changeImgDeath).innerHTML = '<img src="media/affichage/face_' + String(this.currentEnemy.id) + '_defaite.png" > </img>';
+            document.querySelector(changeImgVictory).innerHTML = '<img src="media/affichage/face_' + String(this.currentPlayer.id) + '_victoire.png" > </img>';
+            console.log('Le combat est terminé ! ' + this.currentPlayer.name + ' a gagné l\'affrontement !');
             this.victory = 1;
         }
     }

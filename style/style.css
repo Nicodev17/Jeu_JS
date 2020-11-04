@@ -1,6 +1,5 @@
 /* ---- CORPS DE LA PAGE ---- */
 body {
-    color: white;
     background-image: url(fond.jpg);
     margin: 0;
 }
@@ -44,7 +43,7 @@ h1 {
 
 /* ---- DESIGN DU JEU ---- */
 
-/* ---- Affichage interactif ---- */
+/* ---- AFFICHAGE COMBAT ---- */
 
 .overlay {
     position: fixed;
@@ -102,7 +101,7 @@ h1 {
     background-color: #cecdcd;
 }
 
-/* -- BOITE DIV DE L'INTERFACE -- */
+/* ---- BOITE DIV DE L'INTERFACE ---- */
 
 .displayDiv {
     display: flex;
@@ -161,12 +160,12 @@ h3 {
 
 /* ---- PARTIE DES STATS ---- */
 
-.imageJoueur {
+.image_joueur1, .image_joueur2 {
     display: flex;
     justify-content: center;
 }
 
-.imageJoueur img {
+.image_joueur1 img, .image_joueur2 img {
     width: 80px;
     height: auto;
     margin-bottom: 15px;
@@ -199,6 +198,30 @@ h3 {
     font-family: 'Press Start 2P', cursive;
     color: rgb(69, 94, 69);
     font-size: 18px;
+}
+
+/* ---- Barre de vie interactive ---- */
+
+progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance:none;
+}
+
+progress::-webkit-progress-bar{
+    border-radius: 10px;
+}
+
+/* Opera & Chrome */
+progress::-webkit-progress-value {
+    background: rgba(168, 68, 68, 0.842);
+    border-radius: 10px;
+}
+
+/* Firefox */
+progress#barre_j1::-moz-progress-bar {
+    background-color: rgba(168, 68, 68, 0.842);
+    border-radius: 10px;
 }
 
 

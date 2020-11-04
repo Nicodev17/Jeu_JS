@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Chivalry War </title>
+    <title> ⚔ Chivalry War ⚔ </title>
     <!-- Polices du site -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Style -->
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <audio src="media/music/mediev.mp3" id="audioGame"></audio>
+    <audio loop src="media/music/mediev.mp3" id="audioGame"></audio>
     <audio src="media/music/bip.mp3" id="bipAudio"></audio>
 
     <button id="musicButton"> MUSIC ON </button>
@@ -39,7 +39,7 @@
             <h2> Arthur </h2>
 
             <div>
-                <div class="imageJoueur">
+                <div class="image_joueur1">
                     <img src="media/affichage/face_joueur1.png" alt="Portrait Joueur 1">
                 </div>
             </div>
@@ -47,6 +47,7 @@
             <div class="pv">
                 <h3> PTS DE VIE </h3>
                 <p id="ptsVie_joueur1"> 100 </p>
+                <progress max="100" value="100" id="barre_joueur1"></progress>
             </div>
 
             <div class="arme">
@@ -70,7 +71,7 @@
             <h2> Lancelot </h2>
 
             <div>
-                <div class="imageJoueur">
+                <div class="image_joueur2">
                     <img src="media/affichage/face_joueur2.png" alt="Portrait Joueur 2">
                 </div>
             </div>
@@ -78,6 +79,7 @@
             <div class="pv">
                 <h3> PTS DE VIE </h3>
                 <p id="ptsVie_joueur2"> 100 </p>
+                <progress max="100" value="100" id="barre_joueur2"></progress>
             </div>
 
             <div class="arme">
@@ -111,5 +113,4 @@
     <script src="src/init.js"></script>
 
 </body>
-
 </html>
