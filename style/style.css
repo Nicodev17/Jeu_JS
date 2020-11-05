@@ -17,7 +17,7 @@
     font-size: 33px;
     font-weight: 400;
     color: #858077;
-    -webkit-text-stroke: 0.06em;
+    -webkit-text-stroke: 0.07em;
     -webkit-text-stroke-color: #3b2c05;
 }
 
@@ -26,7 +26,7 @@
     font-family: 'Press Start 2P', cursive;
     font-weight: 700;
     font-size: 15px;
-    color:  #3d4433d7;
+    color:  #31352cc9;
 }
 
 #buttonStart {
@@ -212,6 +212,7 @@ h3 {
 
 .statPlayer1 {
     margin-right: 50px;
+    margin-left: 15px;
     padding: 15px;
     width: 200px;
     height: 500px;
@@ -224,6 +225,7 @@ h3 {
 
 .statPlayer2 {
     margin-left: 50px;
+    margin-right: 15px;
     padding: 15px;
     width: 200px;
     height: 500px;
@@ -316,14 +318,32 @@ img {
     height: auto;
 }
 
-/* ---- MEDIA QUERIES ---- */
+/* ---- MEDIA QUERIES ADAPTATION ECRAN ---- */
 
-/* PETITS ECRANS */
-@media screen and (max-width: 70em) {
+/* PETITS ECRANS (pc) */
+@media screen and (max-width: 72em) {
     canvas {
         width: 450px;
         height: 450px;
     }
+
+    .statPlayer1 {
+        margin-left: 15px;
+    }
+
+    .statPlayer2 {
+        margin-right: 15px;
+    }
+}
+
+
+/* PETITS ECRANS (tablette) */
+@media screen and (max-width: 62em) {
+    canvas {
+        width: 450px;
+        height: 450px;
+    }
+
     h1 {
         font-size: 28px;
         font-weight: 200;
@@ -347,20 +367,51 @@ img {
 
     .statPlayer1 {
         margin-bottom: 20px;
+        margin-left: 15px;
     }
 
     .statPlayer2 {
         margin-top: 20px;
+        margin-right: 15px;
     }
 
+    .bandeauArmes img {
+        width: 550px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    h3 {
+        line-height: 20px;
+        padding: 5px;
+        text-align: center;
+    }
 }
 
-/* SMARTPHONES */
-@media screen and (max-width: 35em) {
+/* Spécification pour le bouton musique */ 
+@media screen and (max-width: 50em) {
+    #musicButton {
+        position: relative;
+        margin-left: 90px;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+}
+
+/* ECRAN SMARTPHONES */
+@media screen and (max-width: 38em) {
+
+    #regles {
+        padding: 20px;
+    }
+
     canvas {
         width: 400px;
         height: 400px;
     }
+    
     h1 {
         font-size: 24px;
         font-weight: 200;
@@ -371,14 +422,38 @@ img {
         width: 400px;
     }
 
+    #musicButton {
+        margin-left: 20px;
+    }
+
     .displayDiv {
         flex-direction: column;
         align-items: center;
     }
 
+    h2 {
+        font-size: 15px;
+    }
+    h3 {
+        font-size: 10px;
+        line-height: 20px;
+    }
+
+    progress{
+        width: 100px;
+    }
+
+    .arme {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
     .statPlayer1, .statPlayer2  {
         flex-direction: row;
-        width: 360px;
+        width: 375px;
         height: 180px;
     }
 

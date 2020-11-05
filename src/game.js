@@ -10,7 +10,6 @@ class Game {
         this.currentEnemy = players[1];
         this.casesAccess = [];
         this.caseClick = null;
-        this.oldWeapon;
         this.victory;
     }
 /*----------------------------------------------------------------------
@@ -142,13 +141,15 @@ startGame(){
     nextRound() {
         let listeCases = this.mapInfo.listeCases;
         let canvas = this.mapInfo.canvas;
-        let elemLeft = canvas.offsetLeft;
-        let elemTop = canvas.offsetTop;
+        const elemLeft = canvas.offsetLeft;
+        const elemTop = canvas.offsetTop;
 
         // Event au clic
         canvas.addEventListener('click', event => {
-            let x = event.pageX - elemLeft;
-            let y = event.pageY - elemTop;
+            // this.mapInfo.context.lineTo(event.pageX - elemLeft, event.pageY - elemTop);
+            // this.mapInfo.context.stroke();
+            const x = event.pageX - elemLeft;
+            const y = event.pageY - elemTop;
             const bipAudio = document.querySelector('#bipAudio');
 
             // Association d'un n° à la case cliquée
@@ -204,7 +205,7 @@ startGame(){
 
                 // Si le joueur est sur une case d'arme on remplace par l'ancienne arme
                 if (listeCases[this.currentPlayer.numeroCase].weapon != null && listeCases[this.currentPlayer.numeroCase].weapon.includes('weapon')) {
-                    listeCases[this.currentPlayer.numeroCase].weapon = this.oldWeapon;
+                    listeCases[this.currentPlayer.numeroCase].weapon = this.currentPlayer.oldWeapon.id;
                     listeCases[this.currentPlayer.numeroCase].id = "weapon";
                     console.log('L\'arme de la case précédente a été changée');
                 }
@@ -247,7 +248,10 @@ startGame(){
         
         if (this.caseClick != null && listeCases[this.caseClick].id.includes('weapon')) {
 
-            this.oldWeapon = this.currentPlayer.weapon.id;
+            
+            this.currentPlayer.oldWeapon = this.currentPlayer.weapon;
+            
+            console.log(this.currentPlayer.oldWeapon);
 
             switch (listeCases[this.caseClick].weapon) {
                 case "weapon1":
