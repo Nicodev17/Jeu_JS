@@ -5,7 +5,7 @@ function randomNumber() {
 
 // MUSIQUE DU JEU
 
-function music() {
+function musicButton() {
   const musicAudio = document.querySelector('#audioGame');
   const musicButton = document.querySelector('#musicButton');
   let count = 0;
@@ -13,13 +13,13 @@ function music() {
   musicButton.addEventListener("click", function() {
     if(count == 0) {
       count = 1;
+      musicAudio.pause();
+      musicButton.innerHTML = "MUSIC ON";
+    } else {
+      count = 0;
       musicAudio.play();
       musicAudio.volume = 0.5;
       musicButton.innerHTML = "MUSIC OFF";
-    } else {
-      count = 0;
-      musicAudio.pause();
-      musicButton.innerHTML = "MUSIC ON";
     }
   });
 

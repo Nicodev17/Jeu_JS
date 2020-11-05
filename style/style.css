@@ -1,7 +1,72 @@
+/* ---- Ecran de début / règles du jeu ---- */
+#startScreen {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: #808080ee;
+}
+
+#titre {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 33px;
+    font-weight: 400;
+    color: #858077;
+    -webkit-text-stroke: 0.06em;
+    -webkit-text-stroke-color: #3b2c05;
+}
+
+#regles {
+    margin-top: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    font-size: 15px;
+    color:  #3d4433d7;
+}
+
+#buttonStart {
+    margin-top: 80px;
+    width: 250px;
+    height: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    font-weight: 500;
+    color: #53653e;
+    background-color: #dadada7a;
+    border: 3px solid rgb(94, 93, 90);
+    border-radius: 5px;
+    outline-style: none;
+    cursor: pointer;
+}
+
+#buttonStart:hover {
+    background-color: #cecdcd;
+    color: rgb(168, 68, 68);
+}
+
+.blink {
+    animation: blinkcolor 1s infinite;
+}
+
+@keyframes blinkcolor {
+    0% {} 
+    50% {
+        color: #a7a6a67a;
+    }
+}
+
 /* ---- CORPS DE LA PAGE ---- */
+
 body {
     background-image: url(fond.jpg);
     margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .zoneTitre {
@@ -60,6 +125,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     visibility: hidden;
 }
 
@@ -82,7 +148,7 @@ h1 {
     flex-direction: row;
 }
 
-#buttonAttack, #buttonDefend {
+#buttonAttack, #buttonDefend, #buttonReplay {
     width: 180px;
     margin: 14px;
     padding: 10px;
@@ -97,8 +163,18 @@ h1 {
     cursor: pointer;
 }
 
-#buttonAttack:hover, #buttonDefend:hover {
+#buttonAttack:hover, #buttonDefend:hover, #buttonReplay:hover {
     background-color: #cecdcd;
+}
+
+.replay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttonReplay {
+    display: none;
 }
 
 /* ---- BOITE DIV DE L'INTERFACE ---- */
@@ -243,7 +319,7 @@ img {
 /* ---- MEDIA QUERIES ---- */
 
 /* PETITS ECRANS */
-@media screen and (max-width: 55em) {
+@media screen and (max-width: 70em) {
     canvas {
         width: 450px;
         height: 450px;
@@ -253,7 +329,30 @@ img {
         font-weight: 200;
         -webkit-text-stroke: 1.5px;
         -webkit-text-stroke-color: #3b2c05;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 450px;
     }
+
+    .displayDiv {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .statPlayer1, .statPlayer2  {
+        flex-direction: row;
+        width: 500px;
+        height: 200px;
+    }
+
+    .statPlayer1 {
+        margin-bottom: 20px;
+    }
+
+    .statPlayer2 {
+        margin-top: 20px;
+    }
+
 }
 
 /* SMARTPHONES */
@@ -267,5 +366,24 @@ img {
         font-weight: 200;
         -webkit-text-stroke: 1.5px;
         -webkit-text-stroke-color: #3b2c05;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 400px;
     }
+
+    .displayDiv {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .statPlayer1, .statPlayer2  {
+        flex-direction: row;
+        width: 360px;
+        height: 180px;
+    }
+
+    .bandeauArmes img{
+        width: 460px;
+    }
+
 }

@@ -5,13 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> ⚔ Chivalry War ⚔ </title>
-    <!-- Polices du site -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- Style -->
     <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
+
+    <!-- Ecran precedant le jeu -->
+    <div id="startScreen">
+        <p id="titre"> Bienvenue dans Chivalry War ! </p>
+        <p id="regles"> Les règles sont simples : récupère l'arme la plus puissante du plateau </br> </br> 
+             en te déplaçant avec la souris, va ensuite à la rencontre de ton ennemi </br> </br>
+             et térasse le ! </p>
+            <button id="buttonStart"> <span class="blink"> START </span> </button>
+    </div>
     
     <div class="zoneTitre">
         <h1> CHIVALRY WAR </h1>
@@ -19,6 +26,11 @@
 
     <div class="overlay">
         <div class="gameInfo"> <p> Préparez-vos armes, un combat va commencer ! </p> </div>
+
+        <div class="replay"> 
+            <button id="buttonReplay"> REJOUER </button>
+        </div>
+
         <div class="combatInfo"> 
             <p id="textCombat"> Souhaite-tu attaquer ou te défendre ? </p>
             <div id="choix">
@@ -31,10 +43,11 @@
     <audio loop src="media/music/mediev.mp3" id="audioGame"></audio>
     <audio src="media/music/bip.mp3" id="bipAudio"></audio>
 
-    <button id="musicButton"> MUSIC ON </button>
+    <button id="musicButton"> MUSIC OFF </button>
 
     <div class="displayDiv">
 
+        <!-- STATS DU JOUEUR 1 -->
         <div class="statPlayer1">
             <h2> Arthur </h2>
 
@@ -63,10 +76,12 @@
             </div>
         </div>
 
+        <!-- PLATEAU -->
         <div class="gameDiv">
             <canvas id="plateau" width="600" height="600"> LE JEU S'AFFICHE ICI </canvas>
         </div>
 
+        <!-- STATS DU JOUEUR 2 -->
         <div class="statPlayer2">
             <h2> Lancelot </h2>
 
@@ -99,6 +114,7 @@
 
     </div>
 
+    <!-- PRESENTATION ARMES -->
     <div class="bandeauArmes">
         <img src="media/affichage/bandeau_armes.jpg" alt="Bandeau des armes">
     </div>

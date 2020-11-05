@@ -14,7 +14,7 @@ const player2 = new Player("joueur2", "Lancelot", 100, weapon1, 'media/joueurs/j
 // MAP
 const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
 
-music();
+musicButton();
 
 newMap.generateMap();
 newMap.generateObstacles();
@@ -30,12 +30,13 @@ newMap.consolePrint();
 
 //GAME
 const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
-//newGame.setRound();
+
+// Lancement du jeu
+newGame.startGame();
 newGame.setMove();
 newGame.nextRound();
-//newGame.getWeapon();
 
-// Affichage visuel de la map
+// Affichage visuel initial de la map
 newMap.drawMap();
 
 

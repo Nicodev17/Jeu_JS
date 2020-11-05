@@ -13,20 +13,44 @@ class Game {
         this.oldWeapon;
         this.victory;
     }
+/*----------------------------------------------------------------------
+------------------------|| Lancement du jeu  ||-------------------------
+----------------------------------------------------------------------*/
+
+startGame(){
+    const buttonStart = document.querySelector('#buttonStart');
+    const startScreen = document.querySelector('#startScreen');
+    const musicAudio = document.querySelector('#audioGame');
+
+    buttonStart.addEventListener("click", event => {
+        startScreen.setAttribute('style', 'display:none');
+        musicAudio.play();
+        musicAudio.volume = 0.5;        
+    });
+}
 
 /*----------------------------------------------------------------------
 ------------|| Affichage des mouv possibles du joueur  ||---------------
 ----------------------------------------------------------------------*/
     setMove() {
         let listeCases = this.mapInfo.listeCases;
+        let players = this.players;
+        let colorCaseDep;
+
+        if(this.currentPlayer === players[0]){
+            colorCaseDep = "#75706349";
+        } else if (this.currentPlayer === players[1]){
+            colorCaseDep = "#68522944";
+        }
 
         // Cases de gauche
         for (let i = 1; i <= 3; i++) {
             let casesGauche = this.currentPlayer.numeroCase - i;
-            if (casesGauche >= 0 && !listeCases[casesGauche].id.includes('obstacle') && !listeCases[casesGauche].id.includes('joueur') && listeCases[casesGauche].positionX >= 0 && listeCases[casesGauche].positionX <= 480) {
+            if (casesGauche >= 0 && !listeCases[casesGauche].id.includes('obstacle') && !listeCases[casesGauche].id.includes('joueur') 
+            && listeCases[casesGauche].positionX >= 0 && listeCases[casesGauche].positionX <= 480) {
                 this.casesAccess.push(casesGauche);
                 listeCases[casesGauche].type = 'casesAccess';
-                this.mapInfo.context.fillStyle = "#75706349";
+                this.mapInfo.context.fillStyle = colorCaseDep;
                 this.mapInfo.context.fillRect(listeCases[casesGauche].positionX, listeCases[casesGauche].positionY, 60, 60);
             } else {
                 break;
@@ -36,10 +60,11 @@ class Game {
         // Cases de droite
         for (let i = 1; i <= 3; i++) {
             let casesDroite = this.currentPlayer.numeroCase + i;
-            if (casesDroite <= 99 && !listeCases[casesDroite].id.includes('obstacle') && !listeCases[casesDroite].id.includes('joueur') && listeCases[casesDroite].positionX >= 60 && listeCases[casesDroite].positionX <= 540) {
+            if (casesDroite <= 99 && !listeCases[casesDroite].id.includes('obstacle') && !listeCases[casesDroite].id.includes('joueur') 
+            && listeCases[casesDroite].positionX >= 60 && listeCases[casesDroite].positionX <= 540) {
                 this.casesAccess.push(casesDroite);
                 listeCases[casesDroite].type = 'casesAccess';
-                this.mapInfo.context.fillStyle = "#75706349";
+                this.mapInfo.context.fillStyle = colorCaseDep;
                 this.mapInfo.context.fillRect(listeCases[casesDroite].positionX, listeCases[casesDroite].positionY, 60, 60);
             } else {
                 break;
@@ -54,7 +79,7 @@ class Game {
             } else {
                 this.casesAccess.push(casesHaut);
                 listeCases[casesHaut].type = 'casesAccess';
-                this.mapInfo.context.fillStyle = "#75706349";
+                this.mapInfo.context.fillStyle = colorCaseDep;
                 this.mapInfo.context.fillRect(listeCases[casesHaut].positionX, listeCases[casesHaut].positionY, 60, 60);
             }
         }
@@ -67,7 +92,7 @@ class Game {
             } else {
                 this.casesAccess.push(casesBas);
                 listeCases[casesBas].type = 'casesAccess';
-                this.mapInfo.context.fillStyle = "#75706349";
+                this.mapInfo.context.fillStyle = colorCaseDep;
                 this.mapInfo.context.fillRect(listeCases[casesBas].positionX, listeCases[casesBas].positionY, 60, 60);
             }
         }
@@ -283,6 +308,7 @@ class Game {
         const buttonDefend = document.querySelector("#buttonDefend");
         const textFight = document.querySelector("#textCombat");
         const startAndEndFight = document.querySelector(".gameInfo");
+        const buttonReplay = document.querySelector("#buttonReplay");
         
         textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
         
@@ -300,7 +326,12 @@ class Game {
             if(this.victory == 1){
                 chooseFight.setAttribute('style', 'display:none');
                 startAndEndFight.setAttribute('style', 'display:block');
-                startAndEndFight.innerHTML = '<p> Le combat est terminé ! ' + this.currentEnemy.name + ' a gagné l\'affrontement ! </p>';
+                startAndEndFight.innerHTML = '<p> Le combat est terminé, ' + this.currentEnemy.name + ' a gagné l\'affrontement ! </p>';
+                // Bouton rejouer une partie
+                buttonReplay.setAttribute('style', 'display:block');
+                buttonReplay.addEventListener("click", event => {
+                    window.location.reload();
+                });
             }
         });
         
