@@ -19,8 +19,8 @@ class GameMap {
     this.context.fillStyle = "#ede0bb"; // Couleur des cases
     this.context.fillRect(0, 0, this.coordinates.largeurMap, this.coordinates.hauteurMap); // Totalité du canvas prise pour créer les cases
 
-    let colonne = 0,
-      ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
+    let colonne = 0;
+    let ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
 
     // Pour chaque case du plateau :
     for (let i = 0; i < this.coordinates.nombreCases; i++) {
@@ -29,7 +29,7 @@ class GameMap {
       this.context.strokeRect(this.coordinates.tailleCase * colonne, this.coordinates.tailleCase * ligne, this.coordinates.tailleCase, this.coordinates.tailleCase);
 
       // Ajout d'un objet à chaque case avec son id de base et ses positions
-      let mapCase = {};
+      const mapCase = {};
       mapCase['numeroCase'] = i;
       mapCase['id'] = 'casevide';
       mapCase['type'] = 'inaccess';

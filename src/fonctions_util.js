@@ -22,21 +22,23 @@ function musicButton() {
       musicButton.innerHTML = "MUSIC OFF";
     }
   });
-
 }
 
-/* Tableau des sources d'images pour les obstacles
-let obstacles = ['stone.png', 'tree.png', 'bush.png'];
+// Redimensionnement responsive du canvas (optionnel)
 
-function obstacleAleatoire(array) {
-	return array[Math.floor(Math.random() * array.length)];
-} // retourne 1, 2 ou 3
+/* function canvasUpdate() {
+  const gameDiv = document.querySelector('.gameDiv');
+  const canvasTest = document.querySelector('#plateau');
+  const style = getComputedStyle(canvasTest);
+  const width = style.width;
+  const height = style.height;
 
-let testObstacle = obstacleAleatoire(obstacles);
+  console.log(width);
+  console.log(height);
 
-console.log(testObstacle); */
-
-// util de game
-//console.log(this.currentPlayer.weapon.name);   
-//let emptyCase = listeCases.filter(element => element.id === "casevide"); // filtre les cases du tableau ayant pour id casevide
-//console.log(emptyCase); */
+  if ( width == '450px') {
+    console.log('--!--- TEST --!---');
+    gameDiv.innerHTML = '<canvas id="plateau" width="450" height="450"> LE JEU EST AFFICHE ICI </canvas>';
+    console.log(gameDiv);
+  }
+} */

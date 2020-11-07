@@ -217,7 +217,7 @@ h3 {
     width: 200px;
     height: 500px;
     background-color: #d1cbbd;
-    border: 5px solid rgb(94, 93, 90);
+    border: 5px solid rgb(94, 92, 90);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -243,10 +243,19 @@ h3 {
     justify-content: center;
 }
 
-.image_joueur1 img, .image_joueur2 img {
+#imgJ1 {
     width: 80px;
     height: auto;
     margin-bottom: 15px;
+    border-bottom: 5px solid rgb(94, 93, 90);
+    border-bottom-style: dotted;
+}
+
+#imgJ2{
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+    border-bottom: 5px solid rgba(94, 93, 90, 0);
 }
 
 #ptsVie_joueur1, #ptsVie_joueur2 {
@@ -322,10 +331,10 @@ img {
 
 /* PETITS ECRANS (pc) */
 @media screen and (max-width: 72em) {
-    canvas {
+    /* canvas {
         width: 450px;
         height: 450px;
-    }
+    } */
 
     .statPlayer1 {
         margin-left: 15px;
@@ -334,15 +343,30 @@ img {
     .statPlayer2 {
         margin-right: 15px;
     }
+
+    #titre {
+        padding: 20px;
+    }
+
+    #regles {
+        padding: 20px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }
 
 
 /* PETITS ECRANS (tablette) */
-@media screen and (max-width: 62em) {
-    canvas {
+@media screen and (max-width: 71em) {
+    /* canvas {
         width: 450px;
         height: 450px;
-    }
+    } */
 
     h1 {
         font-size: 28px;
@@ -388,6 +412,18 @@ img {
         padding: 5px;
         text-align: center;
     }
+
+    #textCombat {
+        text-align: center;
+        line-height: 25px;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
+    }
 }
 
 /* Spécification pour le bouton musique */ 
@@ -407,10 +443,10 @@ img {
         padding: 20px;
     }
 
-    canvas {
+    /* canvas {
         width: 400px;
         height: 400px;
-    }
+    } */
     
     h1 {
         font-size: 24px;
@@ -459,6 +495,16 @@ img {
 
     .bandeauArmes img{
         width: 460px;
+    }
+
+    #textCombat {
+        text-align: center;
+        line-height: 25px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
     }
 
 }

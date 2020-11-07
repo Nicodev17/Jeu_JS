@@ -107,9 +107,13 @@ startGame(){
         if (this.currentPlayer == players[0]) {
             this.currentPlayer = players[1];
             this.currentEnemy = players[0];
+            $("#imgJ1").css("border-bottom","5px solid rgba(94, 93, 90, 0)");
+            $("#imgJ2").css("border-bottom","6px solid rgb(94, 93, 90)").css("border-bottom-style", "dotted");
         } else if (this.currentPlayer == players[1]) {
             this.currentPlayer = players[0];
             this.currentEnemy = players[1];
+            $("#imgJ2").css("border-bottom","5px solid rgba(94, 93, 90, 0)");
+            $("#imgJ1").css("border-bottom","6px solid rgb(94, 93, 90)").css("border-bottom-style", "dotted");
         }
     }
 
@@ -146,8 +150,6 @@ startGame(){
 
         // Event au clic
         canvas.addEventListener('click', event => {
-            // this.mapInfo.context.lineTo(event.pageX - elemLeft, event.pageY - elemTop);
-            // this.mapInfo.context.stroke();
             const x = event.pageX - elemLeft;
             const y = event.pageY - elemTop;
             const bipAudio = document.querySelector('#bipAudio');
@@ -330,7 +332,7 @@ startGame(){
             if(this.victory == 1){
                 chooseFight.setAttribute('style', 'display:none');
                 startAndEndFight.setAttribute('style', 'display:block');
-                startAndEndFight.innerHTML = '<p> Le combat est terminé, ' + this.currentEnemy.name + ' a gagné l\'affrontement ! </p>';
+                startAndEndFight.innerHTML = '<p> Bien joué ! ' + this.currentEnemy.name + ' a vaincu ' + this.currentPlayer.name + ' et remporte le combat.</p>';
                 // Bouton rejouer une partie
                 buttonReplay.setAttribute('style', 'display:block');
                 buttonReplay.addEventListener("click", event => {

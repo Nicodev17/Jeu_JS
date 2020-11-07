@@ -11,6 +11,8 @@ const weapon5 = new Weapon("weapon5", "Hache de Berserk", 25, 'media/armes/arme_
 const player1 = new Player("joueur1", "Arthur", 100, weapon1, 'media/joueurs/joueur1_1.png', weapon1);
 const player2 = new Player("joueur2", "Lancelot", 100, weapon1, 'media/joueurs/joueur2_1.png', weapon1);
 
+//canvasUpdate();
+
 // MAP
 const newMap = new GameMap('plateau', 6, 6, [player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
 
@@ -26,8 +28,6 @@ newMap.assignObject();
 // fonction temporaire
 newMap.consolePrint();
 
-// console.log(player1.name + " & " + player2.name + " débutent la partie avec " + player1.health + " points de vie. Et l'arme : " + weapon1.name);
-
 //GAME
 const newGame = new Game([player1, player2], [weapon1, weapon2, weapon3, weapon4, weapon5]);
 
@@ -38,5 +38,3 @@ newGame.nextRound();
 
 // Affichage visuel initial de la map
 newMap.drawMap();
-
-
