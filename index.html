@@ -1,35 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Chivalry War </title>
-    <!-- Polices du site -->
+    <title> Chivalry War ⚔ </title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- Style -->
     <link rel="stylesheet" href="style/style.css">
+    <link rel="icon" type="image/png" href="media/affichage/favicon_cw.png"/>
 </head>
 
 <body>
-    <h1> CHIVALRY WAR </h1>
 
-    <div class="gameDiv">
-        <canvas id="plateau" width="600" height="600"> LE JEU S'AFFICHE ICI </canvas>
+    <!-- Ecran precedant le jeu -->
+    <div id="startScreen">
+        <p id="titre"> ⚔ Bienvenue dans Chivalry War ! ⚔ </p>
+        <p id="regles"> Les règles sont simples : récupère l'arme la plus puissante du plateau </br> </br> 
+             en te déplaçant avec la souris, va ensuite à la rencontre de ton ennemi </br> </br>
+             et térasse le ! 💀 </p>
+            <button id="buttonStart"> <span class="blink"> START </span> </button>
+    </div>
+    
+    <div class="zoneTitre">
+        <h1> CHIVALRY WAR </h1>
     </div>
 
-    <div class="gameInfo"> 
-        <div class="statPlayer1"> 
-            <p class="test"> Joueur 1 </p>
+    <div class="overlay">
+        <div class="gameInfo"> <p> Préparez-vos armes, un combat va commencer ! </p> </div>
+
+        <div class="replay"> 
+            <button id="buttonReplay"> <span class="blink"> REJOUER </span> </button>
         </div>
 
-        <div class="statPlayer2"> 
-            <p class="test2"> Joueur 2 </p>
+        <div class="combatInfo"> 
+            <p id="textCombat"> souhaite-tu attaquer ou te défendre ? </p>
+            <div id="choix">
+                <button id="buttonAttack"> ATTAQUER </button>
+                <button id="buttonDefend"> SE DEFENDRE </button>
+            </div>
+        </div>
+    </div>
+
+    <audio loop src="media/music/mediev.mp3" id="audioGame"></audio>
+    <audio src="media/music/bip.mp3" id="bipAudio"></audio>
+
+    <button id="musicButton"> MUSIC OFF </button>
+
+    <div class="displayDiv">
+
+        <!-- STATS DU JOUEUR 1 -->
+        <div class="statPlayer1">
+            
+            <div>
+                <h2> Arthur </h2>
+                <div class="image_joueur1">
+                    <img id="imgJ1" src="media/affichage/face_joueur1.png" alt="Portrait Joueur 1">
+                </div>
+            </div>
+
+            <div class="pv">
+                <h3> PTS DE VIE </h3>
+                <p id="ptsVie_joueur1"> 100 </p>
+                <progress max="100" value="100" id="barre_joueur1"></progress>
+            </div>
+
+            <div class="arme">
+                <h3> ARME ACTUELLE </h3>
+                <div class="arme_joueur1">
+                    <img src="media/armes/arme_1.png" alt="Arme 1">
+                </div>
+            </div>
+
+            <div class="degats">
+                <h3> DEGATS </h3>
+                <p id="degats_joueur1"> 10 </p>
+            </div>
         </div>
 
-        <div class="statWeapons">
-            <p class="test3"> Les Armes : </p>
+        <!-- PLATEAU -->
+        <div class="gameDiv">
+            <canvas id="plateau" width="600" height="600"> LE JEU S'AFFICHE ICI </canvas>
         </div>
 
+        <!-- STATS DU JOUEUR 2 -->
+        <div class="statPlayer2">
+            
+            <div>
+                <h2> Lancelot </h2>
+                <div class="image_joueur2">
+                    <img id="imgJ2" src="media/affichage/face_joueur2.png" alt="Portrait Joueur 2">
+                </div>
+            </div>
+
+            <div class="pv">
+                <h3> PTS DE VIE </h3>
+                <p id="ptsVie_joueur2"> 100 </p>
+                <progress max="100" value="100" id="barre_joueur2"></progress>
+            </div>
+
+            <div class="arme">
+                <h3> ARME ACTUELLE </h3>
+
+                <div class="arme_joueur2">
+                    <img src="media/armes/arme_1.png" alt="Arme 1">
+                </div>
+            </div>
+
+            <div class="degats">
+                <h3> DEGATS </h3>
+
+                <p id="degats_joueur2"> 10 </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PRESENTATION ARMES -->
+    <div class="bandeauArmes">
+        <img src="media/affichage/bandeau_armes.jpg" alt="Bandeau des armes">
     </div>
 
     <!-- Fichiers JS -->
@@ -42,5 +130,4 @@
     <script src="src/init.js"></script>
 
 </body>
-
 </html>

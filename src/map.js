@@ -19,8 +19,8 @@ class GameMap {
     this.context.fillStyle = "#ede0bb"; // Couleur des cases
     this.context.fillRect(0, 0, this.coordinates.largeurMap, this.coordinates.hauteurMap); // Totalité du canvas prise pour créer les cases
 
-    let colonne = 0,
-      ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
+    let colonne = 0;
+    let ligne = 0; // Initialisation à 0 x 0 pour la position de la première case
 
     // Pour chaque case du plateau :
     for (let i = 0; i < this.coordinates.nombreCases; i++) {
@@ -29,10 +29,12 @@ class GameMap {
       this.context.strokeRect(this.coordinates.tailleCase * colonne, this.coordinates.tailleCase * ligne, this.coordinates.tailleCase, this.coordinates.tailleCase);
 
       // Ajout d'un objet à chaque case avec son id de base et ses positions
-      let mapCase = {};
+      const mapCase = {};
       mapCase['numeroCase'] = i;
       mapCase['id'] = 'casevide';
       mapCase['type'] = 'inaccess';
+      mapCase['player'] = null;
+      mapCase['weapon'] = null;
       mapCase['positionX'] = this.coordinates.tailleCase * colonne;
       mapCase['positionY'] = this.coordinates.tailleCase * ligne;
       this.listeCases.push(mapCase);
@@ -83,7 +85,8 @@ class GameMap {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
-      listeCases[caseAleatoire].id = "joueur" + index;
+      listeCases[caseAleatoire].id = "joueur";
+      listeCases[caseAleatoire].player = 'joueur' + index;
     }
   }
 
@@ -98,7 +101,8 @@ class GameMap {
       while (listeCases[caseAleatoire] && listeCases[caseAleatoire].id !== "casevide") {
         caseAleatoire = randomNumber();
       }
-      listeCases[caseAleatoire].id = "weapon" + index;
+      listeCases[caseAleatoire].id = "weapon";
+      listeCases[caseAleatoire].weapon = 'weapon' + index;
     }
   }
 
@@ -130,26 +134,25 @@ class GameMap {
           case "obstacle2":
             image.src = "media/tree.png";
             break
-          case "joueur1":
-            image.src = player1.imgUrl;
+          case "joueur":
+            if(this.listeCases[i].player === "joueur1") {
+              image.src = player1.imgUrl;
+            } else {
+              image.src = player2.imgUrl;
+            }
             break
-          case "joueur2":
-            image.src = player2.imgUrl;
-            break
-          case "weapon1":
-          image.src = weapon1.imgUrl;
-            break
-          case "weapon2":
-            image.src = weapon2.imgUrl;
-            break
-          case "weapon3":
-            image.src = weapon3.imgUrl;
-            break
-          case "weapon4":
-            image.src = weapon4.imgUrl;
-            break
-          case "weapon5":
-            image.src = weapon5.imgUrl;
+          case "weapon":
+            if(this.listeCases[i].weapon === "weapon1") {
+              image.src = weapon1.imgUrl;
+            } else if (this.listeCases[i].weapon === "weapon2") {
+              image.src = weapon2.imgUrl;
+            } else if (this.listeCases[i].weapon === "weapon3"){
+              image.src = weapon3.imgUrl;
+            } else if (this.listeCases[i].weapon === "weapon4"){
+              image.src = weapon4.imgUrl;
+            } else if (this.listeCases[i].weapon === "weapon5"){
+              image.src = weapon5.imgUrl;
+            }
             break
         }
         if (image.src !== undefined) {
@@ -166,8 +169,8 @@ class GameMap {
   ----------------------------------------------------------------------*/
   spawnNext() {
     let listeCases = this.listeCases;
-    let joueur1 = listeCases.find(element => element.id === "joueur1");
-    let joueur2 = listeCases.find(element => element.id === "joueur2");
+    let joueur1 = listeCases.find(element => element.player === "joueur1");
+    let joueur2 = listeCases.find(element => element.player === "joueur2");
     //J1
     let caseUnblockRight = joueur1.numeroCase + 1;
     let caseUnblockLeft = joueur1.numeroCase - 1;
@@ -195,26 +198,34 @@ class GameMap {
   assignObject() {
     let listeCases = this.listeCases;
     // -- Joueurs --
-    // Objets
-    let objetJ1 = player1;
-    let objetJ2 = player2;
     // Cases
-    let caseJ1 = listeCases.find(element => element.id === "joueur1");;
-    let caseJ2 = listeCases.find(element => element.id === "joueur2");;
+    let caseJ1 = listeCases.find(element => element.player === "joueur1");;
+    let caseJ2 = listeCases.find(element => element.player === "joueur2");;
 
-    this.players[0] = Object.assign(objetJ1, caseJ1);
-    this.players[1] = Object.assign(objetJ2, caseJ2);
+    this.players[0].numeroCase = caseJ1.numeroCase;
+    this.players[0].positionX = caseJ1.positionX;
+    this.players[0].positionY = caseJ1.positionY;
+    this.players[0].type = caseJ1.type;
+
+    this.players[1].numeroCase = caseJ2.numeroCase;
+    this.players[1].positionX = caseJ2.positionX;
+    this.players[1].positionY = caseJ2.positionY;
+    this.players[1].type = caseJ2.type;
 
     // -- Armes --
+    let objetArme1 = weapon1;
     let objetArme2 = weapon2;
     let objetArme3 = weapon3;
     let objetArme4 = weapon4;
     let objetArme5 = weapon5;
+
+    let caseArme1 = listeCases.find(element => element.id === "weapon1");
     let caseArme2 = listeCases.find(element => element.id === "weapon2");
     let caseArme3 = listeCases.find(element => element.id === "weapon3");
     let caseArme4 = listeCases.find(element => element.id === "weapon4");
     let caseArme5 = listeCases.find(element => element.id === "weapon5");
 
+    this.weapons[0] = Object.assign(objetArme1, caseArme1);
     this.weapons[1] = Object.assign(objetArme2, caseArme2);
     this.weapons[2] = Object.assign(objetArme3, caseArme3);
     this.weapons[3] = Object.assign(objetArme4, caseArme4);
@@ -230,6 +241,7 @@ class GameMap {
     console.log(this.players[1]);
 
     // Armes
+    console.log(this.weapons[0]);
     console.log(this.weapons[1]);
     console.log(this.weapons[2]);
     console.log(this.weapons[3]);

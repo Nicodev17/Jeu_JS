@@ -1,88 +1,510 @@
-/* CORPS DE LA PAGE */
+/* ---- Ecran de début / règles du jeu ---- */
+#startScreen {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: #808080ee;
+}
+
+#titre {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 33px;
+    font-weight: 400;
+    color: #858077;
+    -webkit-text-stroke: 0.07em;
+    -webkit-text-stroke-color: #3b2c05;
+}
+
+#regles {
+    margin-top: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    font-size: 15px;
+    color:  #31352cc9;
+}
+
+#buttonStart {
+    margin-top: 80px;
+    width: 250px;
+    height: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    font-weight: 500;
+    color: #53653e;
+    background-color: #dadada7a;
+    border: 3px solid rgb(94, 93, 90);
+    border-radius: 5px;
+    outline-style: none;
+    cursor: pointer;
+}
+
+#buttonStart:hover {
+    background-color: #cecdcd;
+    color: rgb(168, 68, 68);
+}
+
+.blink {
+    animation: blinkcolor 1s infinite;
+}
+
+@keyframes blinkcolor {
+    0% {} 
+    50% {
+        color: #a7a6a67a;
+    }
+}
+
+/* ---- CORPS DE LA PAGE ---- */
+
 body {
-    color: white;
-    background-image: url(background.png);
+    background-image: url(fond.jpg);
     margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.zoneTitre {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 h1 {
     font-family: 'Press Start 2P', cursive;
-    font-size: 32px;
+    font-size: 35px;
     font-weight: 400;
-    color: #8a7f66;
-    -webkit-text-stroke: 2px;
+    color: #858077;
+    -webkit-text-stroke: 0.06em;
     -webkit-text-stroke-color: #3b2c05;
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    align-items: center;
+    width: 600px;
+    height: 50px;
+    border: 5px solid rgb(94, 93, 90);
+    background-color: #ede0bb;
 }
 
-#couleurcase {
-    color : #75706349;
+#musicButton {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 15px;
+    margin-top: 40px;
+    padding: 6px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    background-color: #d1cbbd;
+    color: #53653e;
+    border: 2px solid rgb(94, 93, 90);
 }
 
-/* DESIGN DU JEU */
+/* ---- DESIGN DU JEU ---- */
 
-/* BOITE DIV DU PLATEAU */
-.gameDiv {
+/* ---- AFFICHAGE COMBAT ---- */
+
+.overlay {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 130px;
+    color: rgb(97, 97, 97);
+    background-color: #d1cbbdc4;
+    border: 5px solid rgb(94, 93, 90);
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    padding: 20px;
+    flex-direction: column;
+    visibility: hidden;
 }
 
-/* PLATEAU */
-canvas {
-    border: 5px solid rgb(94, 93, 90);
-    cursor: pointer;
+.gameInfo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 15px;
+    display: none;
 }
 
-/* PETITS ECRANS */
-@media screen and (max-width: 55em) {
-    canvas {
-        width: 450px;
-        height: 450px;
-    }
-    h1 {
-        font-size: 28px;
-        font-weight: 200;
-        -webkit-text-stroke: 1.5px;
-        -webkit-text-stroke-color: #3b2c05;
-    }
+.combatInfo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 15px;
+    display: none;
 }
 
-/* SMARTPHONES */
-@media screen and (max-width: 35em) {
-    canvas {
-        width: 400px;
-        height: 400px;
-    }
-    h1 {
-        font-size: 24px;
-        font-weight: 200;
-        -webkit-text-stroke: 1.5px;
-        -webkit-text-stroke-color: #3b2c05;
-    }
-}
-
-/* ---- BOITES DES STATS JOUEURS ---- */
-
-.gameInfo{
+#choix{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
+#buttonAttack, #buttonDefend, #buttonReplay {
+    width: 180px;
+    margin: 14px;
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 13px;
+    font-weight: 500;
+    color: #53653e;
+    background-color: #dadada;
+    border: 3px solid rgb(94, 93, 90);
+    border-radius: 10px;
+    outline-style: none;
+    cursor: pointer;
+}
+
+#buttonAttack:hover, #buttonDefend:hover, #buttonReplay:hover {
+    background-color: #cecdcd;
+}
+
+.replay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttonReplay {
+    display: none;
+}
+
+/* ---- BOITE DIV DE L'INTERFACE ---- */
+
+.displayDiv {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+/* ---- PLATEAU ---- */
+
+canvas {
+    border: 5px solid rgb(94, 93, 90);
+    cursor: pointer;
+}
+
+/* ---- BOITES DES STATS JOUEURS ---- */
+
+h2 {
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(97, 97, 97);
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(97, 97, 97);
+    font-size: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .statPlayer1 {
-    margin-right: 30px;
+    margin-right: 50px;
+    margin-left: 15px;
+    padding: 15px;
+    width: 200px;
+    height: 500px;
+    background-color: #d1cbbd;
+    border: 5px solid rgb(94, 92, 90);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .statPlayer2 {
-    margin-left: 30px;
+    margin-left: 50px;
+    margin-right: 15px;
+    padding: 15px;
+    width: 200px;
+    height: 500px;
+    background-color: #d1cbbd;
+    border: 5px solid rgb(94, 93, 90);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.statWeapons {
-    margin-left: 30px;
+/* ---- PARTIE DES STATS ---- */
+
+.image_joueur1, .image_joueur2 {
+    display: flex;
+    justify-content: center;
+}
+
+#imgJ1 {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+    border-bottom: 5px solid rgb(94, 93, 90);
+    border-bottom-style: dotted;
+}
+
+#imgJ2{
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+    border-bottom: 5px solid rgba(94, 93, 90, 0);
+}
+
+#ptsVie_joueur1, #ptsVie_joueur2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(168, 68, 68);
+    font-size: 18px;
+}
+
+.arme_joueur1, .arme_joueur2 {
+    display: flex;
+    justify-content: center;
+}
+
+.arme_joueur1 img, .arme_joueur2 img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 15px;
+    border: 4px solid rgba(126, 125, 122, 0.644);
+    padding: 5px;
+}
+
+#degats_joueur1, #degats_joueur2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(69, 94, 69);
+    font-size: 18px;
+}
+
+/* ---- Barre de vie interactive ---- */
+
+progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance:none;
+}
+
+progress::-webkit-progress-bar{
+    border-radius: 10px;
+}
+
+/* Opera & Chrome */
+progress::-webkit-progress-value {
+    background: rgba(168, 68, 68, 0.842);
+    border-radius: 10px;
+}
+
+/* Firefox */
+progress#barre_j1::-moz-progress-bar {
+    background-color: rgba(168, 68, 68, 0.842);
+    border-radius: 10px;
+}
+
+
+/* ---- BOITE du bandeau d'arme ---- */
+
+.bandeauArmes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+img {
+    width: 700px;
+    height: auto;
+}
+
+/* ---- MEDIA QUERIES ADAPTATION ECRAN ---- */
+
+/* PETITS ECRANS (pc) */
+@media screen and (max-width: 72em) {
+    /* canvas {
+        width: 450px;
+        height: 450px;
+    } */
+
+    .statPlayer1 {
+        margin-left: 15px;
+    }
+
+    .statPlayer2 {
+        margin-right: 15px;
+    }
+
+    #titre {
+        padding: 20px;
+    }
+
+    #regles {
+        padding: 20px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+
+/* PETITS ECRANS (tablette) */
+@media screen and (max-width: 71em) {
+    /* canvas {
+        width: 450px;
+        height: 450px;
+    } */
+
+    h1 {
+        font-size: 28px;
+        font-weight: 200;
+        -webkit-text-stroke: 1.5px;
+        -webkit-text-stroke-color: #3b2c05;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 450px;
+    }
+
+    .displayDiv {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .statPlayer1, .statPlayer2  {
+        flex-direction: row;
+        width: 500px;
+        height: 200px;
+    }
+
+    .statPlayer1 {
+        margin-bottom: 20px;
+        margin-left: 15px;
+    }
+
+    .statPlayer2 {
+        margin-top: 20px;
+        margin-right: 15px;
+    }
+
+    .bandeauArmes img {
+        width: 550px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    h3 {
+        line-height: 20px;
+        padding: 5px;
+        text-align: center;
+    }
+
+    #textCombat {
+        text-align: center;
+        line-height: 25px;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
+    }
+}
+
+/* Spécification pour le bouton musique */ 
+@media screen and (max-width: 50em) {
+    #musicButton {
+        position: relative;
+        margin-left: 90px;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+}
+
+/* ECRAN SMARTPHONES */
+@media screen and (max-width: 38em) {
+
+    #regles {
+        padding: 20px;
+    }
+
+    /* canvas {
+        width: 400px;
+        height: 400px;
+    } */
+    
+    h1 {
+        font-size: 24px;
+        font-weight: 200;
+        -webkit-text-stroke: 1.5px;
+        -webkit-text-stroke-color: #3b2c05;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 400px;
+    }
+
+    #musicButton {
+        margin-left: 20px;
+    }
+
+    .displayDiv {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h2 {
+        font-size: 15px;
+    }
+    h3 {
+        font-size: 10px;
+        line-height: 20px;
+    }
+
+    progress{
+        width: 100px;
+    }
+
+    .arme {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .statPlayer1, .statPlayer2  {
+        flex-direction: row;
+        width: 375px;
+        height: 180px;
+    }
+
+    .bandeauArmes img{
+        width: 460px;
+    }
+
+    #textCombat {
+        text-align: center;
+        line-height: 25px;
+    }
+
+    .gameInfo {
+        text-align: center;
+        line-height: 25px;
+    }
+
 }
