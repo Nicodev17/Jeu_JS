@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Chivalry War ⚔ </title>
+    <title> Chivalry War </title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
-    <link rel="icon" type="image/png" href="media/affichage/favicon_cw.png"/>
+    <link rel="icon" type="image/png" href="media/affichage/favicon.png"/>
 </head>
 
 <body>
@@ -15,9 +15,9 @@
     <!-- Ecran precedant le jeu -->
     <div id="startScreen">
         <p id="titre"> ⚔ Bienvenue dans Chivalry War ! ⚔ </p>
-        <p id="regles"> Les règles sont simples : récupère l'arme la plus puissante du plateau </br> </br> 
-             en te déplaçant avec la souris, va ensuite à la rencontre de ton ennemi </br> </br>
-             et térasse le ! 💀 </p>
+        <p id="regles"> Les règles sont simples : 2 joueurs IRL sont requis, allez récupérer l'arme la plus puissante du plateau
+             en vous déplaçant avec la souris de 1 à 3 cases, rencontrez ensuite votre adversaire sur une case proche pour le défier dans un combat à mort ! 💀
+        </br> </br> Bonne chance chevalier !</p>
             <button id="buttonStart"> <span class="blink"> START </span> </button>
     </div>
     
@@ -33,10 +33,15 @@
         </div>
 
         <div class="combatInfo"> 
-            <p id="textCombat"> souhaite-tu attaquer ou te défendre ? </p>
+            <p id="textCombatJ1"> <strong> Arthur </strong> souhaites-tu attaquer ou te défendre ? </p>
+            <p id="textCombatJ2"> <strong> Lancelot </strong> souhaites-tu attaquer ou te défendre ? </p>
             <div id="choix">
-                <button id="buttonAttack"> ATTAQUER </button>
-                <button id="buttonDefend"> SE DEFENDRE </button>
+                <button id="buttonAttack" title="Vous infligerez à l'adversaire les dégâts de l'arme que vous portez"> 
+                    <span> ATTAQUER </span> <img src="media/affichage/sword.png"> 
+                </button>
+                <button id="buttonDefend" title="Vous subirez -50% de dégâts à la prochaine attaque de l'ennemi">
+                    <span> SE DEFENDRE </span> <img src="media/affichage/shield.png"> 
+                </button>
             </div>
         </div>
     </div>

@@ -24,7 +24,8 @@ startGame(){
     buttonStart.addEventListener("click", event => {
         startScreen.setAttribute('style', 'display:none');
         musicAudio.play();
-        musicAudio.volume = 0.5;        
+        musicAudio.volume = 0.5;
+        $('html').css('overflow', 'visible');      
     });
 }
 
@@ -113,7 +114,7 @@ startGame(){
             this.currentPlayer = players[0];
             this.currentEnemy = players[1];
             $("#imgJ2").css("border-bottom","5px solid rgba(94, 93, 90, 0)");
-            $("#imgJ1").css("border-bottom","6px solid rgb(94, 93, 90)").css("border-bottom-style", "dotted");
+            $("#imgJ1").css("border-bottom","6px solid rgb(94, 93, 90)").css("border-bottom-style", "dashed");
         }
     }
 
@@ -312,27 +313,38 @@ startGame(){
         const chooseFight = document.querySelector(".combatInfo");
         const buttonAttack = document.querySelector("#buttonAttack");
         const buttonDefend = document.querySelector("#buttonDefend");
-        const textFight = document.querySelector("#textCombat");
+        
         const startAndEndFight = document.querySelector(".gameInfo");
         const buttonReplay = document.querySelector("#buttonReplay");
         
-        textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
-        
         chooseFight.setAttribute('style', 'visibility:visible');
         $(".combatInfo").delay(2000).fadeIn("slow")
+        
+        if(this.currentPlayer === player1){
+            $('#textCombatJ1').css('display', 'block');
+            $('#textCombatJ2').css('display', 'none');
+        } else {
+            $('#textCombatJ2').css('display', 'block');
+            $('#textCombatJ1').css('display', 'none');
+        }
         
         buttonAttack.addEventListener("click", event => {
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi d\'attaquer !');
             this.chooseAttack()
             this.setRound();
-
-            textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
-
+            // Texte alternant dans le combat
+            if(this.currentPlayer === player1){
+                $('#textCombatJ1').css('display', 'block');
+                $('#textCombatJ2').css('display', 'none');
+            } else {
+                $('#textCombatJ2').css('display', 'block');
+                $('#textCombatJ1').css('display', 'none');
+            }         
             // Détection de la victoire
             if(this.victory == 1){
                 chooseFight.setAttribute('style', 'display:none');
                 startAndEndFight.setAttribute('style', 'display:block');
-                startAndEndFight.innerHTML = '<p> Bien joué ! ' + this.currentEnemy.name + ' a vaincu ' + this.currentPlayer.name + ' et remporte le combat.</p>';
+                startAndEndFight.innerHTML = '<p> Bien joué ! ' + '<strong>' + this.currentEnemy.name + '</strong>' + ' a vaincu ' + '<strong>' + this.currentPlayer.name + '</strong>' + ' et remporte le combat !</p>';
                 // Bouton rejouer une partie
                 buttonReplay.setAttribute('style', 'display:block');
                 buttonReplay.addEventListener("click", event => {
