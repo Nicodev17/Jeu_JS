@@ -313,33 +313,32 @@ startGame(){
         const chooseFight = document.querySelector(".combatInfo");
         const buttonAttack = document.querySelector("#buttonAttack");
         const buttonDefend = document.querySelector("#buttonDefend");
-        
         const startAndEndFight = document.querySelector(".gameInfo");
         const buttonReplay = document.querySelector("#buttonReplay");
         
-        chooseFight.setAttribute('style', 'visibility:visible');
-        $(".combatInfo").delay(2000).fadeIn("slow")
-        
-        if(this.currentPlayer === player1){
+        if (this.currentPlayer == player1) {
             $('#textCombatJ1').css('display', 'block');
             $('#textCombatJ2').css('display', 'none');
-        } else {
+        } else if (this.currentPlayer == player2) {
             $('#textCombatJ2').css('display', 'block');
             $('#textCombatJ1').css('display', 'none');
         }
+
+        chooseFight.setAttribute('style', 'visibility:visible');
+        $(".combatInfo").delay(2000).fadeIn("slow");
         
         buttonAttack.addEventListener("click", event => {
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi d\'attaquer !');
             this.chooseAttack()
             this.setRound();
             // Texte alternant dans le combat
-            if(this.currentPlayer === player1){
+            if (this.currentPlayer == player1) {
                 $('#textCombatJ1').css('display', 'block');
                 $('#textCombatJ2').css('display', 'none');
-            } else {
+            } else if (this.currentPlayer == player2) {
                 $('#textCombatJ2').css('display', 'block');
                 $('#textCombatJ1').css('display', 'none');
-            }         
+            }     
             // Détection de la victoire
             if(this.victory == 1){
                 chooseFight.setAttribute('style', 'display:none');
@@ -357,7 +356,13 @@ startGame(){
             console.log('Le joueur ' + this.currentPlayer.name + ' a choisi de se défendre !');
             this.chooseDefend();
             this.setRound();
-            textFight.innerHTML = this.currentPlayer.name + " souhaites-tu attaquer ou te défendre ?";
+            if (this.currentPlayer == player1) {
+                $('#textCombatJ1').css('display', 'block');
+                $('#textCombatJ2').css('display', 'none');
+            } else if (this.currentPlayer == player2) {
+                $('#textCombatJ2').css('display', 'block');
+                $('#textCombatJ1').css('display', 'none');
+            } 
         });
     }
 
