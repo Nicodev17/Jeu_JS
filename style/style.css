@@ -526,8 +526,22 @@ img {
 /* ECRAN SMARTPHONES */
 @media screen and (max-width: 38em) {
 
+    #startScreen {
+        padding-top: 15px;
+        justify-content: flex-start;
+    }
+
+    html {
+        overflow-y: visible;
+    }
+
+    body {
+        min-height: 100%;
+        position: relative;
+    }
+
     #titre {
-        font-size: 27px;
+        font-size: 24px;
     }
 
     #regles {
