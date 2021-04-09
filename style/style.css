@@ -430,6 +430,20 @@ img {
 /* PETITS ECRANS (tablette) */
 @media screen and (max-width: 71em) {
 
+    html {
+        overflow-y: visible;
+    }
+
+    body {
+        min-height: 100%;
+        position: relative;
+    }
+
+    #startScreen {
+        padding-top: 70px;
+        justify-content: flex-start;
+    }
+
     #titre {
         padding: 0 50px 0 50px;
         font-size: 30px;
@@ -532,7 +546,7 @@ img {
     }
 
     html {
-        overflow-y: visible;
+        overflow: visible;
     }
 
     body {
