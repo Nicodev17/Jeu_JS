@@ -1,7 +1,4 @@
 /* ---- Ecran de début / règles du jeu ---- */
-html {
-    overflow: hidden;
-}
 
 #startScreen {
     z-index: 1;
@@ -9,11 +6,12 @@ html {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     text-align: center;
     background-color: #808080ee;
+    padding-top: 120px;
 }
 
 #titre {
@@ -79,7 +77,8 @@ body {
     background-image: url(fond.jpg);
     margin: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
 .zoneTitre {
@@ -430,6 +429,16 @@ img {
 /* PETITS ECRANS (tablette) */
 @media screen and (max-width: 71em) {
 
+    body {
+        min-height: 100%;
+        position: relative;
+    }
+
+    #startScreen {
+        padding-top: 100px;
+        justify-content: flex-start;
+    }
+
     #titre {
         padding: 0 50px 0 50px;
         font-size: 30px;
@@ -529,10 +538,6 @@ img {
     #startScreen {
         padding-top: 15px;
         justify-content: flex-start;
-    }
-
-    html {
-        overflow-y: visible;
     }
 
     body {
