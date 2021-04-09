@@ -3,6 +3,16 @@ function randomNumber() {
     return Math.floor(Math.random() * 99); // 99 = nb de cases total
   }
 
+// Fonction pour remonter la page à chaque reload
+function reloadTop() {
+  window.addEventListener("load", function (event) {
+    $('html, body').animate({ 
+      scrollTop: '0px' 
+    }, 
+    200);
+  });
+}
+
 // MUSIQUE DU JEU
 
 function musicButton() {
